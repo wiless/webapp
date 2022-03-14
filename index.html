@@ -912,8 +912,7 @@
                     d3.json(url).then(obj => {
                         new Inspector(document.getElementById("filelist")).fulfilled(obj);
                         console.log("Downloading nwlayout ", obj.nwlayout.MediaLink);
-                        d3.csv(obj.nwlayout.MediaLink, d3.autoType).then(data => { PlotScatter(data) }
-                        );
+                        // d3.csv(obj.nwlayout.MediaLink, d3.autoType).then(data => { PlotScatter(data) });
                     }
                     );
                 }).catch((error) => {
@@ -926,7 +925,7 @@
                     console.log("Download 1", fileref.name, " url is ", url);
                     d3.csv(url, d3.autoType).then(obj => {
                         new Inspector(document.getElementById("nwlayout")).fulfilled(obj);
-                        // PlotScatter(obj);
+                        PlotScatter(obj);
                     }
                     );
                 }).catch((error) => {
