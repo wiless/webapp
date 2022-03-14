@@ -21,8 +21,6 @@ function API() {
       .set("submitjob", { path: "/submitjobv2", method: "post" })
       .set("google", { path: "/auth/google", method: "post" });
 
-
-
     headers = { 'Authorization': "Bearer " + id_token };
     console.log("Wiless API : " + apiurl + " Instance Created..");
   })();
@@ -92,7 +90,7 @@ function API() {
 
 
     // headers = {};
-    return fetch(apiurl + path, {
+    return fetch(this.apiurl + path, {
       method: method,
       credentials: "include",
       headers: headers,
