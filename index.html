@@ -152,34 +152,46 @@
         <header class="mdl-layout__header ">
             <!-- mdl-layout__header--scroll -->
             <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title">App Runner</span>
-                <div class="mdl-layout-spacer"></div>
-                <div>
-                    <button
-                        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-color--red-100">M.2101</button>
-                    <button
-                        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-color--red-100">SLS
-                    </button>
+                <span class="mdl-layout-title">App Runner </span>
+
+                <div class="material-icons  " style="font-size:2em;padding: 1em;" id="servicehost"> cloud_off
                 </div>
+                <div class="mdl-layout-spacer"></div>
+
                 <div class="mdl-layout-spacer"></div>
 
                 <nav class="mdl-navigation">
                     <!-- Add MDL Navigation Links here -->
-                    <button id="demo-menu-top-left" class="mdl-button mdl-js-button mdl-button--icon">
+                    <button id="card4menu" class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">more_vert</i>
                     </button>
-                    <ul class="mdl-menu mdl-list mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                        for="demo-menu-top-left">
-                        <!-- Add MDL Menu Items here -->
+                    <!-- <label for="card4menu" class="mdl-textfield__label">DG Source</label> -->
+                    <ul for="card4menu" class="mdl-menu mdl-menu--bottom-right mdl-js-menu">
                         <li class="mdl-menu__item" onclick="openForm()">
-
                             <span class="mdl-list__item">
                                 <i class="material-icons">person</i> Login
                             </span>
 
                         </li>
-                        <li class=" mdl-menu__item">Version</li>
+                        <li class="mdl-menu__item mdl-menu__item--full-bleed-divider" disabled>
+                            <span>Pick Server</span>
+                        </li>
+
+                        <li class="mdl-menu__item" data-val="dg1" onclick="selectBot('local')">
+                            <label class="mdl-radio mdl-js-radio" for="option1">
+                                <input type="radio" id="option1" name="dgsource" class="mdl-radio__button" checked>
+                                <span class="mdl-radio__label">Local Machine</span>
+                            </label>
+
+                        </li>
+                        <li class="mdl-menu__item" data-val="devel" onclick="selectBot('gae')">
+                            <label class="mdl-radio mdl-js-radio" for="option2">
+                                <input type="radio" id="option2" name="dgsource" class="mdl-radio__button">
+                                <span class="mdl-radio__label">Google Server</span>
+                            </label>
+                        </li>
                     </ul>
+
 
                 </nav>
 
@@ -361,31 +373,6 @@
                         <div class="mdl-card__actions mdl-card--border">
 
                             <div id="filelist"></div>
-                        </div>
-                        <div class="mdl-card__menu">
-
-                            <button id="card4menu" class="mdl-button mdl-js-button mdl-button--icon">
-                                <i class="material-icons">more_vert</i>
-                            </button>
-
-                            <!-- <label for="card4menu" class="mdl-textfield__label">DG Source</label> -->
-                            <ul for="card4menu" class="mdl-menu mdl-menu--bottom-right mdl-js-menu">
-                                <li class="mdl-menu__item" data-val="dg1" onclick="selectBot('dg1')">
-                                    <label class="mdl-radio mdl-js-radio" for="option1">
-                                        <input type="radio" id="option1" name="dgsource" class="mdl-radio__button"
-                                            checked>
-                                        <span class="mdl-radio__label">DG Bot</span>
-                                    </label>
-
-                                </li>
-                                <li class="mdl-menu__item" data-val="devel" onclick="selectBot('devel')">
-                                    <label class="mdl-radio mdl-js-radio" for="option2">
-                                        <input type="radio" id="option2" name="dgsource" class="mdl-radio__button">
-                                        <span class="mdl-radio__label">PES</span>
-                                    </label>
-                                </li>
-                            </ul>
-
                         </div>
 
 
@@ -645,10 +632,18 @@
 
 
 
-        var selectedbot = "dg1";
+        var selectedbot = "https://webapps.sendildevar.in";
         function selectBot(params) {
-            document.getElementById("currentdgsource").innerText = params;
-            console.log("Source ", params);
+            if (params == "local") {
+                wiless.apiurl = "http://localhost:8080"
+                document.getElementById("servicehost").innerText = "cloud_off";
+            }
+
+            if (params == "gae") {
+                wiless.apiurl = "https://webapps.sendildevar.in"
+                document.getElementById("servicehost").innerText = "cloud_sync";
+            }
+
             selectedbot = params;
         }
         var runtime = {};
