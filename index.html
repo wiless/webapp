@@ -1,1 +1,1470 @@
-Waiting for release..
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Local Firebase testing dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SARE DG Status</title>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css"> -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/mystyle.css">
+    <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@3/dist/inspector.css">
+    <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/custom.css"> -->
+
+    <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script src="/static/jquery.min.js"></script>
+    <script src="/static/semantic.min.js"></script>
+    <link rel="stylesheet" href="/static/beagle.css" type="text/css" media="screen" charset="utf-8">
+    <script src="plot.js" type="module">   </script>
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+    <a target=_blank href="https://github.com/wiless/wiless.github.io/edit/master/_apps/viewer.html"><i
+            class="linkify small icon"></i></a>
+    <script src="https://unpkg.com/@observablehq/inspector/dist/inspector.js" crossorigin></script>
+    <link crossorigin rel="stylesheet" href="https://unpkg.com/@observablehq/inspector@3.2.2/dist/inspector.css">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/d3@6"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1"></script>
+    <meta name="google-signin-client_id"
+        content="565126014426-fis7623ann950k0i711upje0o5kt3qhp.apps.googleusercontent.com">
+    <meta name="google-signin-cookiepolicy" content="single_host_origin">
+    <meta name="google-signin-scope" content="profile email">
+
+    <link href="/static/jsoneditor.css" rel="stylesheet" type="text/css">
+    <script src="/static/jsoneditor.js"></script>
+    <script async defer src="/static/json-formatter.umd.js" charset="UTF-8"></script>
+    <style>
+        .json-formatter-row .json-formatter-string,
+        .json-formatter-row .json-formatter-stringifiable {
+            color: teal;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+    </style>
+
+
+
+    <style>
+        .material-icons.md-dark {
+            color: rgb(7, 241, 19);
+        }
+
+        .material-icons.md-dark.md-inactive {
+            color: rgba(10, 24, 7, 0.5);
+        }
+
+
+        .minicard {
+            /* padding: 10px; */
+            max-height: 150px;
+            background-color: rgba(243, 235, 162, 0.411);
+            overflow-y: auto;
+        }
+
+        .mdl-card {
+            width: auto;
+            overflow-y: auto;
+
+            /* background-color: rgba(250, 235, 215, 0.842); */
+        }
+
+        div.column,
+        div.columns {
+            background-color: rgb(219, 209, 195);
+            box-shadow: chartreuse;
+            min-height: 100px;
+
+            border-radius: 1%;
+        }
+    </style>
+
+
+</head>
+<!-- https://www.tutorialspoint.com/materialdesignlite/materialdesignlite_grids.htm -->
+<!-- https://www.tutorialspoint.com/materialdesignlite/materialdesignlite_layouts.htm -->
+
+<body>
+
+    <!-- mdl-layout--fixed-drawer -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header ">
+        <header class="mdl-layout__header ">
+            <!-- mdl-layout__header--scroll -->
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">App Runner</span>
+                <div class="mdl-layout-spacer"></div>
+                <div>
+                    <button
+                        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-color--red-100">M.2101</button>
+                    <button
+                        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-color--red-100">SLS
+                    </button>
+                </div>
+                <div class="mdl-layout-spacer"></div>
+
+                <nav class="mdl-navigation">
+                    <!-- Add MDL Navigation Links here -->
+                    <button id="demo-menu-top-left" class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">more_vert</i>
+                    </button>
+                    <ul class="mdl-menu mdl-list mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        for="demo-menu-top-left">
+                        <!-- Add MDL Menu Items here -->
+                        <li class="mdl-menu__item" onclick="openForm()">
+
+                            <span class="mdl-list__item">
+                                <i class="material-icons">person</i> Login
+                            </span>
+
+                        </li>
+                        <li class=" mdl-menu__item">Version</li>
+                    </ul>
+
+                </nav>
+
+
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <!-- <img src="static/mark.png" alt=""> -->
+            <img src='static/mark2.png' style:"background-size: contain;max-height:120px;" portrait
+                onclick="switchImage()"> </img>
+            <span class="mdl-layout-title">User</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="#plots">M.2101 </a>
+                <a class="mdl-navigation__link" href="">SLS Simulator</a>
+                <a class="mdl-navigation__link" href="">Plots</a>
+                <a class="mdl-navigation__link" href="">ITU-R Models</a>
+                <button id="show-dialog" type="button" class="mdl-button">Show Dialog</button>
+            </nav>
+        </div>
+        <dialog class="mdl-dialog">
+            <h4 class="mdl-dialog__title">Allow data collection?</h4>
+            <div class="mdl-dialog__content">
+                <p>
+                    Allowing us to collect data will let us get you the information you want faster.
+                </p>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button type="button" class="mdl-button accept">Agree</button>
+                <button type="button" class="mdl-button close">Disagree</button>
+            </div>
+        </dialog>
+
+        <div class="mdl-card mdl-shadow--2dp form-popup" id="myForm" style="background-color: antiquewhite;">
+
+            <h4 class="mdl-dialog__title">Login</h4>
+            <!-- <div class="mdl-card__title mdl-card--expand">
+                Login
+            </div> -->
+            <div class="mdl-card__actions mdl-card--border ">
+                <div action="">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="email" required autocomplete="username">
+                        <label class="mdl-textfield__label" for="email"> Email</label>
+
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+
+                        <label class="mdl-textfield__label" for="psw">Password</label>
+                        <input class="mdl-textfield__input" type="password" autocomplete="current-password"
+                            placeholder="Enter Password" name="psw" required>
+                    </div>
+                    <!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"> -->
+                    <!-- <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"
+                                        data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left"
+                                        id="googlesignin">
+                                        Sign In
+                                    </div> -->
+                    <!-- <button
+                                        class="mdl-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect mdl-js-button "
+                                        id="googlesignin">Google Signin</button> -->
+                    <!-- </div> -->
+                    <div>
+                        <button
+                            class="mdl-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect mdl-js-button "
+                            id="submit">Login</button>
+                        <button
+                            class="mdl-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect mdl-js-button "
+                            onclick="closeForm()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="form-popup" id="myForm"> -->
+
+
+
+
+        <!-- </div> -->
+
+
+
+        <main class="mdl-layout__content ">
+            <!-- <div class="row">
+                <div class="one column">One</div>
+                <div class="eleven columns">Eleven</div>
+            </div> -->
+
+            <div class="mdl-grid container mdl-layout-spacer">
+                <!-- CARDS  -->
+                <!-- CARD#1 Logged In User Info can be moved to left later  -->
+
+
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet  ">
+                    <div class="mdl-card mdl-shadow--2dp mdl-card-full">
+                        <div class="mdl-card__title">
+                            <div id="username"> </div>
+                            <div class="mdl-tooltip" data-mdl-for="username">
+                                Provider
+                            </div>
+
+
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"
+                                id="loadjobs">Load Jobs</button>
+
+                        </div>
+                        <!-- <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="loadJobs">
+                            <i class="material-icons">replay</i>
+                        </button> -->
+
+                        <div class="mdl-card__menu">
+                            <button id="card1menu" class="mdl-button mdl-js-button mdl-button--icon">
+                                <i class="material-icons">info</i>
+                            </button>
+
+
+                            <!-- <button id="card1menu" class="mdl-button mdl-js-button mdl-button--icon">
+                                <i class="material-icons">more_vert</i>
+                            </button>
+                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                                for="card1menu">
+
+                            <li class="mdl-menu__item" onclick="console.log('clicked')">aa</li>
+                            <li class="mdl-menu__item">ab</li>
+                            </ul> -->
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <!-- CARD#2 DEVICE Status   -->
+                <div class="mdl-cell mdl-cell--stretch mdl-cell--3-col mdl-cell--8-col-tablet ">
+                    <div class="mdl-card mdl-shadow--2dp mdl-card-full">
+                        <div class="mdl-card__title">
+                            Logs & Status
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <div id="jobstatus">
+
+                                <!-- <div id="firebaseui-auth-container"></div> -->
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- CARD#3a DEVICE Status   -->
+                <div class="mdl-cell mdl-cell--stretch mdl-cell--3-col mdl-cell--8-col-tablet">
+                    <div class="mdl-card mdl-shadow--2dp mdl-card-full">
+                        <div class="mdl-card__title">
+                            <span class=" mdl-badge" data-badge="?">List of Jobs</span>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border minicard">
+                            <div id="joblist" style="margin: auto;"></div>
+                            <ul class="mdl-list" id="obsfunctions">
+                            </ul>
+                        </div>
+                        <div class="mdl-card__menu">
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="refresh">
+                                <i class="material-icons">refresh</i> </button>
+                            <div class="mdl-tooltip" data-mdl-for="refresh">
+                                Reload Jobs
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD#3b DEVICE Status   -->
+                <div class="mdl-cell mdl-cell--stretch mdl-cell--3-col mdl-cell--8-col-tablet ">
+                    <div class="mdl-card  mdl-shadow--2dp mdl-card-full ">
+                        <div class="mdl-card__title ">
+                            Output Links : <span id="currentdgsource">dg1</span>
+                        </div>
+
+                        <div class="mdl-card__actions mdl-card--border">
+
+                            <div id="filelist"></div>
+                        </div>
+                        <div class="mdl-card__menu">
+
+                            <button id="card4menu" class="mdl-button mdl-js-button mdl-button--icon">
+                                <i class="material-icons">more_vert</i>
+                            </button>
+
+                            <!-- <label for="card4menu" class="mdl-textfield__label">DG Source</label> -->
+                            <ul for="card4menu" class="mdl-menu mdl-menu--bottom-right mdl-js-menu">
+                                <li class="mdl-menu__item" data-val="dg1" onclick="selectBot('dg1')">
+                                    <label class="mdl-radio mdl-js-radio" for="option1">
+                                        <input type="radio" id="option1" name="dgsource" class="mdl-radio__button"
+                                            checked>
+                                        <span class="mdl-radio__label">DG Bot</span>
+                                    </label>
+
+                                </li>
+                                <li class="mdl-menu__item" data-val="devel" onclick="selectBot('devel')">
+                                    <label class="mdl-radio mdl-js-radio" for="option2">
+                                        <input type="radio" id="option2" name="dgsource" class="mdl-radio__button">
+                                        <span class="mdl-radio__label">PES</span>
+                                    </label>
+                                </li>
+                            </ul>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                        <div class="mdl-tabs__tab-bar">
+                            <a href="#m2101-panel" class="mdl-tabs__tab ">M.2101</a>
+                            <a href="#sls-panel" class="mdl-tabs__tab is-active">SLS Simulator</a>
+                            <a href="#dummy-panel" class="mdl-tabs__tab">More..</a>
+                        </div>
+
+                        <div class="mdl-tabs__panel " id="m2101-panel">
+                            <div class="mdl-card mdl-shadow--2dp">
+                                <div class="mdl-card__title">
+                                    <h3 class="mdl-card__title-text">M.2101 Configuration</h3>
+                                </div>
+                                <div class="mdl-card__supporting-text">
+                                    <input type="file" id="inputfile" name="inputfile" />
+                                    <!-- Accent-colored raised button with ripple -->
+                                    <label
+                                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary "
+                                        for="inputfile">
+                                        <i class="material-icons ">file_open</i>
+                                        Pick File
+                                    </label>
+                                    <span id="filename"> Filename </span>
+
+                                </div>
+                                <div class="mdl-card__actions mdl-card--border">
+                                    <!-- <label class="mdl-button--primary" for="inputfile">File Pick</label> -->
+                                    <!-- <input class="mdl-textfield__input" type="file" name="inputfile" id="inputfile"> -->
+                                    <div id="output"> </div>
+                                </div>
+                                <div class="mdl-card__menu">
+                                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+                                        id="runm2101">
+                                        <i class="material-icons">queue_play_next</i>
+                                        <!-- <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                                            <i class="material-icons">run_circle</i>
+                                        </button> -->
+                                    </button>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="mdl-tabs__panel is-active" id="sls-panel">
+
+                            <div class="mdl-card mdl-shadow--2dp">
+                                <div class="mdl-card__title">
+                                    <h2 class="mdl-card__title-text">SLS</h2>
+                                </div>
+                                <div class="mdl-card__supporting-text">
+                                    Runs a system simulation, with wrap around and M.2412 based channel models
+                                </div>
+                                <div class="mdl-card__actions mdl-card--border">
+                                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                                        onclick="loadSLSConfigs()">
+                                        Load Defaults
+                                    </a>
+
+                                    <div class="mdl-grid">
+                                        <div class="mdl-cell--4-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone "
+                                            style="border-right:1px solid rgba(6, 45, 46, 0.445);">
+                                            <input type="file" id="itu-file">
+                                            <!-- Accent-colored raised button with ripple -->
+                                            <label
+                                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary "
+                                                for="itu-file">
+                                                <i class="material-icons ">file_open</i>
+                                                ITU (json)
+                                            </label>
+                                            <span>None</span>
+
+                                            <div class="row">
+
+                                                <div id="ituspec" style="height:400px">
+                                                </div>
+                                                <div id="itu"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mdl-cell--4-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone "
+                                            style="border-right:1px solid rgba(6, 45, 46, 0.445);">
+                                            <input type="file" id="nr-file">
+                                            <label
+                                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary "
+                                                for="nr-file">
+                                                <i class="material-icons ">file_open</i>
+                                                NR (json)
+                                            </label>
+                                            <span>None</span>
+
+
+                                            <div class="row">
+
+                                                <div id="nrspec" style="height:400px;">
+                                                </div>
+                                                <div id="nr"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mdl-cell--4-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone  "
+                                            style="border-right:1px solid rgba(6, 45, 46, 0.205);">
+                                            <input type="file" id="sim-file">
+                                            <label
+                                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary "
+                                                for="sim-file">
+                                                <i class="material-icons ">file_open</i>
+                                                SIM (json)
+                                            </label>
+                                            <span>None</span>
+                                            <div class="row">
+                                                <div id="simspec" style="height:400px;">
+                                                </div>
+                                                <div id="sim"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="mdl-card__menu">
+                                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+                                        id="runsls">
+                                        <i class="material-icons">queue_play_next</i>
+                                        <!-- <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                                            <i class="material-icons">run_circle</i>
+                                        </button> -->
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mdl-tabs__panel" id="dummy-panel">
+
+                            <div class="mdl-card mdl-shadow--2dp">
+                                <div class="mdl-card__title">
+                                    <h2 class="mdl-card__title-text">Dummy More..</h2>
+                                </div>
+                                <div class="mdl-card__supporting-text">
+
+                                </div>
+                                <div class="mdl-card__actions mdl-card--border">
+                                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+
+                                    </a>
+                                </div>
+                                <div class="mdl-card__menu">
+                                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                        <i class="material-icons">share</i>
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+                <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet " id="plots">
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="vegaplot">
+                                SINR CDF <i class="material-icons">refresh</i>
+                            </a>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+
+                            <div id="vis"></div>
+                        </div>
+                        <div class="mdl-card__menu">
+                            <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" id="visshare">
+                                <i class="material-icons ">file_download</i>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet ">
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title ">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                                id="refreshSamples">
+                                NW Layout
+                                <i class="material-icons">refresh</i>
+                            </a>
+                            <!-- <div class="mdl-layout-spacer"></div> -->
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                                id="reloadSamples">
+                                Reload
+                            </a>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <div id="nwlayout"></div>
+                        </div>
+                        <div class="mdl-card__menu">
+                            <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                <i class="material-icons ">file_download</i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- CARD#4 PLOT   -->
+                <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet ">
+                    <div class="mdl-card mdl-shadow--2dp mdl-card-full">
+                        <div class="mdl-card__title ">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="reload">
+                                UL CDF
+                                <i class="material-icons">event</i>
+                            </a>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+
+                            <div id="plot">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="mdl-snackbar mdl-js-snackbar">
+
+                    <div class="mdl-snackbar__text">
+                        aa
+                    </div>
+                    <!-- <h3></h3> -->
+                    <button type="button" class="mdl-snackbar__action"></button>
+                </div>
+        </main>
+
+
+    </div>
+    <!-- ---  OBSERVABLE  -->
+
+
+
+
+
+    <script>
+
+
+
+        var selectedbot = "dg1";
+        function selectBot(params) {
+            document.getElementById("currentdgsource").innerText = params;
+            console.log("Source ", params);
+            selectedbot = params;
+        }
+        var runtime = {};
+        var basepath = "/SAREPH3/dg1";
+        var adminpath = basepath + "/admin";
+        var livepath = basepath + "/live";
+        var basepath2 = "/SAREPH3/devel";
+        var livepath2 = basepath2 + "/live";
+
+        function switchImage() {
+            document.querySelector("img").toggleAttribute("portrait");
+            if (document.querySelector("img").getAttribute("portrait") != null) {
+                document.querySelector("img").src = "http://localhost:8080/static/mark2.png"
+            } else {
+                document.querySelector("img").src = "http://localhost:8080/static/mark1.png"
+            }
+
+        }
+
+
+        function displayUserInfo(user) {
+            // console.log("After Sign Popop", user);
+            document.getElementById("username").innerText = user.email;
+            document.querySelector("#username + div[data-mdl-for='username']").innerHTML = `${user.metadata.lastSignInTime} </br> <i>By  ${user.providerData[0].providerId} </i> </br>
+            ${user.uid}`
+            user.getIdTokenResult().then(
+                d => {
+                    // for (const [k, v] of Object.entries(d.claims)) { console.log(k, v) }
+                    var key = "slsuser"
+                    var enabled = d.claims[key];
+                    if (enabled != undefined) {
+                        console.log(key, enabled);
+                    }
+
+                }
+            );
+
+        }
+
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.4"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-analytics.js";
+        import { getAuth, signOut, signInWithPopup, EmailAuthProvider, GoogleAuthProvider, SignInMethod, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+        import { getDatabase, child, get, query, orderByKey, limitToLast, ref, onChildAdded, update, set, onValue } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-database.js"
+        import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-messaging.js";
+        import { collection, getFirestore, doc, getDoc, getDocs, query as dbquery, where, limit, orderBy } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
+        import { getStorage, listAll, ref as sref, getMetadata, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-storage.js";
+
+
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCA2SJwPEXnWB9MBJgvNbrCzNydrMctFpc",
+            authDomain: "sendildevar.firebaseapp.com",
+            databaseURL: "https://sare.asia-southeast1.firebasedatabase.app/", // https://sendildevar-default-rtdb.asia-southeast1.firebasedatabase.app
+            projectId: "sendildevar",
+            storageBucket: "sendildevar.appspot.com",
+            messagingSenderId: "554219100937",
+            appId: "1:554219100937:web:7e8dc521b4a7e94b23d1d8",
+            measurementId: "G-TW4LTM2R0Y"
+        };
+
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const gprovider = new GoogleAuthProvider();
+
+        const rtdb = getDatabase();
+        const db = getFirestore();
+
+        const storage = getStorage(app, "gs://gcrapps");
+
+        // const firestore=
+        // All module related callback functions
+
+        var currentUser;
+
+        auth.onAuthStateChanged(user => {
+            if (user != null) {
+                user.getIdToken(/* forceRefresh */ false).then(function (idToken) {
+                    // Send token to your backend via HTTPS
+                    // ...
+                    console.log("the user is ", user);
+                    console.log("ID token is ", idToken);
+                    wiless.id_token = idToken;
+                }).catch(function (error) {
+                    // Handle error
+                    console.log("Error Getting token ", error);
+                });
+                currentUser = user;
+                // console.log("Seems login changed ", user);
+                displayUserInfo(user);
+                // const hellofile = ref(storage, 'SLS/hello.json');
+                // var path = "SLS/eG7vjzb173cvJo7YoxuVsILyGKQ2/sharmalsheik.jpg";
+                // path = "x.png";
+                // getDownloadURL(sref(storage, path)).then(url => {
+                //     console.log("File link for download ", url)
+                //     var elm = document.getElementById("plotbubble");
+                //     var inspect = new Inspector(elm).fulfilled(url);
+                //     // inspect().fulfilled("Total Entries " + querySnapshot.size);
+                // }
+                // );
+
+            }
+
+        });
+        var recentstatus;
+        document.getElementById("loadjobs").onclick = () => {
+            console.log("user ", currentUser.uid);
+
+            getRecentJobs(currentUser.uid);
+
+        }
+        document.getElementById("runsls").onclick = () => {
+
+            // var subscription = getSubscriptionToken();
+            // var obj = { ...slsinfo[globalcounter], gcm: subscription, useremail: userprofile.getEmail() };
+            var obj = { ...slsinfo[globalcounter], app: "sls" };
+            console.log("Submitting Job (runSLS) ", obj);
+            wiless.APIcalls("submitjob", obj).then(result => {
+                console.log(result)
+                watch(result.data);
+            });
+        };
+        document.getElementById("runm2101").onclick = () => {
+
+            // var subscription = getSubscriptionToken();
+            // var obj = { ...slsinfo[globalcounter], gcm: subscription, useremail: userprofile.getEmail() };
+
+            var obj = { imt: editor.get(), app: "m2101" };
+
+            console.log("Submitting Job (runM2101) ", obj);
+            wiless.APIcalls("submitjob", obj).then(result => {
+                console.log(result)
+                watch(result.data);
+            });
+        };
+        function watch(jobid) {
+            console.log("Current user ", currentUser);
+            var jobpath = "users/" + currentUser.uid + "/status/" + jobid;
+            console.log("Watching Path ", jobpath, jobid);
+            onValue(ref(rtdb, jobpath), (d) => {
+                const status = d.val();
+                console.log("Status is ", status);
+                document.getElementById("jobstatus").innerText = jobid;
+
+                new Inspector(document.querySelector("#jobstatus")).fulfilled(status);
+                // Notification.requestPermission(function (result) {
+                //     if (result === 'granted') {
+                //         navigator.serviceWorker.ready.then(function (registration) {
+                //             registration.showNotification("DG is " + (status.DG ? "ON" : "OFF"));
+                //         });
+                //     }
+                // });
+
+            });
+        }
+
+        function PlotScatter(data, xfield, yfield, el) {
+            var plt = Plot.plot({
+                grid: true,
+                y: { line: true, clip: true, zero: true },
+                x: { line: true, clip: true, zero: true, nice: true },
+                marks: [
+                    Plot.ruleY([0.0], { stroke: "red", strokeDasharray: [5, 5] }),
+                    Plot.ruleX([0.0], { stroke: "red", strokeDasharray: [5, 5] }),
+                    Plot.link(
+                        data,
+                        { y: "Y", x: "X", x2: "X2", y2: "Y2" }
+
+                    )
+                ]
+            })
+            document.getElementById("nwlayout").appendChild(plt);
+        }
+        function PlotCDF(data, xfield) {
+            var plt = Plot.plot({
+                grid: true,
+                y: { line: true, clip: true, zero: true },
+                x: { line: true, clip: true, zero: true, nice: true },
+                marks: [
+                    Plot.ruleY([0.05, 0.95], { stroke: "red", strokeDasharray: [5, 5] }),
+                    Plot.lineY(
+                        data,
+                        Plot.binX(
+                            { y: "proportion", title: "proportion" },
+                            { x: xfield, clip: true, cumulative: true }
+                        )
+                    )
+                ]
+            })
+            document.getElementById("vis").appendChild(plt);
+            var dlurl = setDownloader(plt);
+
+            // var svgData = plt.outerHTML;// $("#figureSvg")[0].outerHTML;
+            // var svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+            // var svgUrl = URL.createObjectURL(svgBlob);
+            // var downloadLink = document.createElement("a");
+            var downloadLink = document.getElementById("visshare");
+            downloadLink.href = dlurl;
+            // downloadLink.innerText = "Click to download svg";
+            downloadLink.download = "DL_CDF.svg";
+            // document.getElementById("vis").appendChild(downloadLink);
+            // downloadLink.click();
+            // document.body.removeChild(downloadLink);
+
+        }
+
+
+
+        function setDownloader(svgobj) {
+            //get svg element.
+            // var svg = document.getElementById(svgId);
+
+            //get svg source.
+            var serializer = new XMLSerializer();
+            var source = serializer.serializeToString(svgobj);
+
+            //add name spaces.
+            if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+                source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+            }
+            if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+                source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+            }
+
+            //add xml declaration
+            source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+            //convert svg source to URI data scheme.
+            var url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+
+            //set url value to a element's href attribute.
+            return url;
+        }
+
+        // get the Details of the configuration and CSV files
+        function getDetails(jobid) {
+            ///
+            var jobpath = "users/" + currentUser.uid + "/status";
+            console.log(jobpath)
+            var mycollection = collection(db, "users/ssendilkumar@gmail.com/jobs/");
+            const docRef = doc(db, "users/ssendilkumar@gmail.com/jobs/", jobid);
+            console.log("mycolleciont", mycollection)
+            // const docSnap = await getDoc(docRef);
+            // const querySnapshot =
+            console.log("Listing documents in collection ", mycollection);
+            // const inspect = Inspector.into("#plotbubble");
+
+            getDoc(docRef, jobid).then(snapshot => {
+                console.log("existis ", snapshot.exists());
+                console.log("snapshot ", snapshot.data());
+            }
+            );
+
+
+            /// STORAGE
+            {
+                const fileref = sref(storage, "results/c8lqacopv5b9tohrdvi0/output.json")
+                getDownloadURL(fileref).then(url => {
+                    console.log("Download 1", fileref.name, " url is ", url);
+                    d3.json(url).then(obj => {
+                        new Inspector(document.getElementById("filelist")).fulfilled(obj);
+                        // PlotCDF(obj, "BestSINR");
+                        console.log("Downloading nwlayout ", obj.nwlayout.MediaLink);
+                        d3.csv(obj.nwlayout.MediaLink, d3.autoType).then(data => { PlotScatter(data) }
+                        );
+                    }
+                    );
+                }).catch((error) => {
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    console.log(error.code);
+                });
+            }
+            {
+                const fileref = sref(storage, "results/c8lqacopv5b9tohrdvi0/nwlayout.csv")
+                getDownloadURL(fileref).then(url => {
+                    console.log("Download 1", fileref.name, " url is ", url);
+                    d3.csv(url, d3.autoType).then(obj => {
+                        new Inspector(document.getElementById("nwlayout")).fulfilled(obj);
+                        // PlotScatter(obj);
+                    }
+                    );
+                }).catch((error) => {
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    console.log(error.code);
+                });
+            }
+            {
+                const fileref = sref(storage, "results/c8lqacopv5b9tohrdvi0/slsprofile.csv")
+                getDownloadURL(fileref).then(url => {
+                    console.log("Download 2", fileref.name, " url is ", url);
+                    d3.csv(url, d3.autoType).then(obj => {
+                        new Inspector(document.getElementById("vis")).fulfilled(obj);
+                        PlotCDF(obj, "BestSINR");
+                    }
+                    );
+                }).catch((error) => {
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    console.log(error.code);
+                });
+            }
+
+            return;
+
+            //skipng
+            const listRef = sref(storage, "results/c8lqacopv5b9tohrdvi0");
+            // Find all the prefixes and items.
+            listAll(listRef)
+                .then((res) => {
+                    res.prefixes.forEach((folderRef) => {
+                        // All the prefixes under listRef.
+                        // You may call listAll() recursively on them.
+                        console.log("Folder in Storage ", folderRef);
+                    });
+                    res.items.forEach((itemRef) => {
+                        // All the items under listRef.
+                        console.log("Document ", itemRef.name, " in Storage ", itemRef);
+                        if (itemRef.name == "slsprofile.csv") {
+                            getMetadata(itemRef).then(metadata =>
+                                console.log("Meta Info ", itemRef.fullPath, " is ", metadata.size, metadata.contentType)
+                            );
+                            getDownloadURL(itemRef).then(url => {
+                                console.log("Download", itemRef.name, " url is ", url);
+                                d3.csv(url, d3.autoType).then(obj => {
+                                    new Inspector(document.getElementById("vis")).fulfilled(obj);
+                                    PlotCDF(obj, "BestSINR");
+                                }
+                                );
+                            }).catch((error) => {
+                                // https://firebase.google.com/docs/storage/web/handle-errors
+                                console.log(error.code);
+                            });
+                        }
+                    });
+
+
+
+                }).catch((error) => {
+                    // Uh-oh, an error occurred!
+                    console.log("Error Fetching list ALl DOCUMENTS in storage");
+                });;
+        }
+        function getRecentJobs(uid) {
+            var jobpath = "users/" + uid + "/status";
+            console.log("getRecentJobs : ", jobpath);
+
+            // get(child(rtdb, jobpath)).then((snapshot) => {
+            // if (snapshot.exists()) {
+            // console.log(snapshot.val());
+            // } else {
+            // console.log("No data available");
+            // }
+            // }).catch((error) => {
+            // console.error(error);
+            // });
+            document.getElementById("joblist").innerHTML = "";
+            var count = 0;
+            var badgelem = document.querySelector("span.mdl-badge");
+            console.log(badgelem);
+            onValue(ref(rtdb, jobpath), (snapshot) => {
+
+                if (snapshot.exists()) {
+                    const inspect = Inspector.into(document.getElementById("joblist"));
+                    console.log("Response ", snapshot.val());
+                    const jobs = snapshot.val();
+                    console.log("Status is ", jobs);
+                    snapshot.forEach((childSnapshot) => {
+                        count++;
+                        badgelem.setAttribute("data-badge", count);
+                        const childKey = childSnapshot.key;
+                        const childData = childSnapshot.val();
+                        // new Inspector().fulfilled(childKey);
+                        childData["jobid"] = childKey;
+                        var divel = document.createElement("label");
+                        divel.innerText = childKey;
+                        // mdl - button mdl - js - button mdl - button--raised mdl - js - ripple - effect mdl - button--primary
+                        divel.classList.add("mdl-button", "mdl-js-button", "mdl-js-ripple-effect");
+                        if (childData.Completed) {
+                            divel.classList.add("mdl-button--primary",);
+                            divel.onclick = function () {
+                                getDetails(childKey);
+                            };
+                        } else {
+                            divel.classList.add("mdl-button--disabled",);
+                        }
+                        document.getElementById("joblist").appendChild(divel);
+                        inspect().fulfilled(childData);
+
+
+                        // ...
+                    });
+                    // new Inspector(document.getElementById("joblist")).fulfilled(jobs);
+                } else {
+                    document.getElementById("joblist").innerHTML = "No Jobs Found";
+                    console.log("No data available");
+                }
+            }, { onlyOnce: true });
+            // .catch((error) => {
+            // console.error(error);
+            // });
+
+        }
+
+
+
+
+        document.getElementById("reloadSamples").onclick = function (ev) {
+            var startdate = new Date(2021, 0, 20);
+            console.log("Hello DB", startdate);
+            var mycollection = collection(db, "SARE/logs/" + selectedbot);
+            // const docRef = doc(db, "users", "sendil");
+
+            // const docSnap = await getDoc(docRef);
+            // const querySnapshot =
+            console.log("Listing documents in collection ", mycollection);
+            const inspect = Inspector.into("#plotbubble");
+
+            getDocs(query(mycollection, where("Timestamp", ">=", startdate), limitToLast(5))).then(
+                querySnapshot => {
+                    var eventlog = [];
+                    inspect().fulfilled("Total Entries " + querySnapshot.size);
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        var data = doc.data();
+                        var mydata = ({ ...data, Timestamp: data.Timestamp.toDate(), time: data.Timestamp.toDate().toGMTString() })
+                        console.log(doc.id, " DATA => ", data);
+                        console.log(doc.id, " MYDATA => ", mydata);
+
+                        // document.getElementById("")
+                        inspect().fulfilled(mydata);
+
+                        // Inspector.into("#plotbubble")(doc.data());
+                        // document.getElementById("plotbubble").appendChild(plotbubble(dgevents));
+                    });
+
+
+                }
+
+            );
+            // const docRef = doc(mycollection, "3RCmhxrY4OSUY1tVNctR");
+            // console.log("Fetching document ", docRef);
+
+            // getDoc(docRef).then(docSnap => {
+            // if (docSnap.exists()) {
+            // console.log("Document data:", docSnap.data());
+            // } else {
+            // // doc.data() will be undefined in this case
+            // console.log("No such document!");
+            // }
+
+            // });
+            // const docRef = doc(collection(db, "SARE"), "logs");
+            // // const docSnap = await getDoc(docRef);
+            // getDoc(docRef).then(docSnap => {
+            // if (docSnap.exists()) {
+            // console.log("Document data:", docSnap.data());
+            // } else {
+            // // doc.data() will be undefined in this case
+            // console.log("No such document!");
+            // }
+            // });
+        };
+
+        document.getElementById("vegaplot").onclick = function (ev) {
+            d3.json("/plot2.vega").then(
+                vspec => {
+                    console.log("Found VEGA Spec ", vspec);
+                    vegaEmbed('#vis', vspec)
+                }
+            );
+
+
+        };
+
+
+
+        // document.getElementById("googlesignin").onclick = function () {
+        //     console.log("Google Signin");
+
+        //     signInWithPopup(auth, gprovider).then(result => {
+        //         const credential = GoogleAuthProvider.credentialFromResult(result);
+        //         const token = credential.accessToken;
+        //         // The signed-in user info.
+        //         const user = result.user;
+        //         console.log("User is ", user);
+        //         const userId = auth.currentUser; // .uid
+        //         console.log("Goolge User - Check token", userId);
+        //         console.log("Goolge  User ID ", userId.uid);
+
+        //         displayUserInfo(user);
+        //     });
+
+        // };
+
+
+        document.getElementById("submit").onclick = function (ev) {
+            var email = document.getElementsByName("email")[0].value;
+            var psw = document.getElementsByName("psw")[0].value;
+            signInWithEmailAndPassword(auth, email, psw)
+                .then((userCredential) => {
+                    // Signed in
+                    closeForm();
+                    const user = userCredential.user;
+                    console.log("Current User ", user);
+                    // ...
+                    const userId = auth.currentUser; // .uid
+                    console.log("User - Check token", userId);
+                    console.log("User ID ", userId.uid);
+
+
+                    auth.updateCurrentUser(user).then(
+                        (d) => {
+                            console.log("success ");
+                            // displayUserInfo(user);
+                        }
+                    );
+                    displayUserInfo(user);
+                    getRecentJobs()
+
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log("Error signing in ", error); //errorCode, errorMessage);
+                    closeForm();
+                });
+
+        }
+
+
+
+        function plotDGevents(ev) {
+
+            // const radioButtons = document.querySelectorAll('input[name="options"]');
+            // let selectedPath;
+            // for (const radioButton of radioButtons) {
+            // if (radioButton.checked) {
+            // selectedPath = radioButton.value;
+            // break;
+            // }
+            // }
+            let path = "/SAREPH3/" + selectedbot;
+
+            console.log("Reload clicked");
+            //get(ref(db, basepath+"/log/bootevents/currentversion"))
+            get(query(ref(rtdb, path + "/log/dgevents"), orderByKey())).then((snapshot) => {
+                // get(ref(db, basepath + "/log/dgevents")).then((snapshot) => {
+                if (snapshot.exists()) {
+                    var data = snapshot.val();
+                    var dgevents = [];
+                    const d3parser = d3.timeParse("%s")
+                    for (const [key, value] of Object.entries(data)) {
+                        var newvalue = { StartTime: d3parser(value.StartTime), StopTime: d3parser(value.StopTime) }
+                        dgevents.push(newvalue)
+                    }
+                    const formatMonth = d3.timeFormat("%B");
+                    const formatDay = d3.timeFormat("%a");
+                    // const epochparser = d3.timeParse("%s");
+                    // formatMonth(date); // "May"
+                    // var currentmonth = (new Date()).getMonth() - 1;
+                    dgevents = dgevents.filter(d => d.StopTime > 0);
+                    console.log("DGEvents ", dgevents);
+                    // runtime.redefine("sampledata", dgevents);
+                    // facet: {
+                    // data: anscombe,
+                    // x: "series"
+                    // },
+                    var x = document.getElementById("plotbubble");
+                    x.removeChild(x.lastChild);
+                    // console.log(x);
+                    // x.appendChild(theplot);
+                    document.getElementById("plotbubble").appendChild(plotbubble(dgevents));
+
+                    // plotbubble
+                    var theplot =
+                        Plot.plot({
+                            grid: true,
+                            width: "1500", marginBottom: 50,
+                            style: { background: `rgba(250, 235, 215, 0.842) ` },
+                            y: { nice: true, zero: true, label: "Day of Month", }, ///domain: [0, 31]
+                            x: { nice: true, tickRotate: -30 }, ///domain: [0, 31]
+                            color: {
+                                legend: true,
+                            },
+                            facet: {
+                                data: dgevents,
+                                grid: true,
+                                x: d => formatMonth((d.StopTime))
+                            },
+                            marks: [
+                                Plot.frame(),
+                                Plot.barX(dgevents, {
+                                    facet: "include",
+                                    // x1: d => d.StartTime.getHours(),
+                                    // x2: d => d.StopTime.getHours(),
+
+                                    x1: d => d.StartTime,
+                                    x2: d => d.StopTime,
+                                    // .getHours()
+                                    // y1: d => (d.StartTime).getDate() + ".0",
+                                    y: d => formatDay(d.StartTime),
+                                    // y: d => (d.StartTime).getDate(),
+                                    // y1: (d, i) => (d.StartTime).getHours(),
+                                    // stroke: "black",
+                                    fillOpacity: 0.5,
+
+                                    fill: (d) => formatDay((d.StartTime)),
+                                    strokeWidth: 1,
+                                    strokeOpacity: 1,
+                                    stroke: (d) => formatDay((d.StartTime))
+                                }),
+                                // Plot.text(dgevents, {
+                                // x: (d) => (d.StartTime).getHours(),
+                                // y: (d) => (d.StartTime).getDate(),
+                                // text: (d) => [6, 0].includes((d.StartTime).getDay()) ? formatDay((d.StartTime)) : ""
+
+                                // })
+                            ]
+                        });
+                    var x = document.getElementById("plot");
+                    x.removeChild(x.lastChild);
+                    x.appendChild(theplot);
+                }
+            });
+        }
+
+        // document.getElementById("reload").onclick = plotDGevents;
+
+
+
+
+
+    </script>
+    <script>
+
+        var editor;
+        function openForm() {
+            console.log("Opening login form");
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+
+        document.getElementById('inputfile')
+            .addEventListener('change', function (e) {
+
+                var fr = new FileReader();
+                var fname = this.files[0].name;
+                document.getElementById("filename").innerText = fname; // this.files[0].name;
+
+
+                fr.onload = function () {
+                    el = document.getElementById('output');
+                    // el.removeChild(el.lastChild);
+                    // el.textContent=fr.result; 
+
+                    try {
+                        json = JSON.parse(fr.result);
+                        if (!el.firstElementChild) {
+                            editor = new JSONEditor(el, { mode: 'view', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, json);
+                        } else {
+                            editor.set(jsob)
+
+                        }
+                    } catch (e) {
+                        document.getElementById("filename").innerText = fname + " Not JSON parsable";
+                    }
+
+
+                    // const editor = new JSONEditor(el, {mode: 'view', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, json);
+
+                }
+                fr.readAsText(this.files[0]);
+            });
+    </script>
+
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            window.onload = function () {
+
+                if (document.getElementsByClassName('.ui.accordion').length > 0) {
+                    $('.ui.accordion').accordion();
+                }
+
+
+
+                //     $('.ui.sidebar')
+                //         .sidebar('attach events', '.toc.item')
+                //       ;
+
+            };
+        });
+
+
+    </script>
+
+    <script>
+        var itueditor, simeditor, nreditor;
+        var subscription;
+        var globalcounter = 0;
+        var slsinfo = {};
+        const JFoptions = {
+            hoverPreviewEnabled: true,
+            hoverPreviewArrayCount: 10,
+            hoverPreviewFieldCount: 2,
+            // theme: 'dark',
+            animateOpen: false,
+            animateClose: false,
+            useToJSON: true
+        };
+
+
+        document.getElementById('itu-file').addEventListener('change', event => {
+            var file = event.target.files[0];
+            // document.querySelector("div#tab1-panel > p").innerText = file.name;
+            // document.getElementById("filename").innerText = fname; // this.files[0].name;
+            // document.querySelector("#itu-file ~ span").innerText = file.name
+
+            file.text().then(d => {
+                var obj = JSON.parse(d);
+
+                loadspec("itu", obj, file.name);
+                // if (slsinfo[globalcounter] == undefined) {
+                //     slsinfo[globalcounter] = { itu: {}, nr: {}, sim: {} };
+                // }
+                // slsinfo[globalcounter].itu = obj;
+                // if (document.getElementById("ituspec").firstElementChild)
+                //     document.getElementById("ituspec").firstElementChild.remove();
+                // itueditor = new JSONEditor(document.getElementById('ituspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, obj);
+
+
+            });
+        });
+        document.getElementById('nr-file').addEventListener('change', event => {
+            var file = event.target.files[0];
+            // document.querySelector("div#tab2-panel > p").innerText = file.name;
+            // document.querySelector("#nr-file ~ span").innerText = file.name
+
+            file.text().then(d => {
+                var obj = JSON.parse(d);
+                loadspec("nr", obj, file.name);
+                // new Inspector(document.querySelector("#nr")).fulfilled(obj);
+
+
+                // if (slsinfo[globalcounter] == undefined) {
+                //     slsinfo[globalcounter] = { itu: {}, nr: {}, sim: {} };
+                // }
+                // slsinfo[globalcounter].nr = obj;
+
+                // if (document.getElementById("nrspec").firstElementChild)
+                //     document.getElementById("nrspec").firstElementChild.remove();
+                // simeditor = new JSONEditor(document.getElementById('nrspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, obj);
+
+
+            });
+        });
+        document.getElementById('sim-file').addEventListener('change', event => {
+            var file = event.target.files[0];
+            // document.querySelector("div#tab3-panel > p").innerText = file.name;
+            // document.querySelector("#sim-file ~ span").innerText = file.name
+            file.text().then(d => {
+                var obj = JSON.parse(d);
+                // new Inspector(document.querySelector("#sim")).fulfilled(obj);
+                loadspec("sim", obj, file.name);
+                // if (slsinfo[globalcounter] == undefined) {
+                //     slsinfo[globalcounter] = { itu: {}, nr: {}, sim: {} };
+                // }
+                // slsinfo[globalcounter].sim = obj;
+                // if (document.getElementById("simspec").firstElementChild)
+                //     document.getElementById("simspec").firstElementChild.remove();
+                // simeditor = new JSONEditor(document.getElementById('simspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, obj);
+
+            });
+        });
+
+    </script>
+    <script type="module">
+        var data = [1, 5, 52, 123];
+        // const domContainer = document.querySelector('#like_button_container');
+        import { Inspector } from "https://unpkg.com/@observablehq/inspector?module";
+        window.Inspector = Inspector;
+
+
+    </script>
+    <script>
+
+
+        $(function () {
+            var start = moment().subtract(29, 'days');
+            // function cb(start, end) {
+            //     $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            // }
+
+            var end = moment();
+            $("#daterange").daterangepicker({
+                opens: 'left',
+                minYear: 2021,
+                showDropdowns: true,
+                timePickerIncrement: 30,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                locale: {
+                    format: 'DD/MMM hh:mm A'
+                }
+            }, function (start, end, label) {
+                console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+            });
+        });
+
+    </script>
+    <script>
+        var dialog = document.querySelector('dialog');
+        var showDialogButton = document.querySelector('#show-dialog');
+        if (!dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+        showDialogButton.addEventListener('click', function () {
+            // dialog.show();
+            dialog.showModal();
+
+        });
+        dialog.close();
+        dialog.querySelector('.accept').addEventListener('click', function () {
+            console.log("Accepting ..");
+            dialog.close();
+        });
+
+        dialog.querySelector('.close').addEventListener('click', function () {
+            dialog.close();
+        });
+    </script>
+</body>
+
+</html>
