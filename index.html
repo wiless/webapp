@@ -52,6 +52,8 @@
         content="565126014426-fis7623ann950k0i711upje0o5kt3qhp.apps.googleusercontent.com">
     <meta name="google-signin-cookiepolicy" content="single_host_origin">
     <meta name="google-signin-scope" content="profile email">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.4"></script>
 
     <link href="/static/jsoneditor.css" rel="stylesheet" type="text/css">
     <script src="/static/jsoneditor.js"></script>
@@ -64,7 +66,44 @@
             word-wrap: break-word;
         }
     </style>
+    <script>
+        var defaultfb = {
+            apiKey: "AIzaSyCA2SJwPEXnWB9MBJgvNbrCzNydrMctFpc",
+            authDomain: "sendildevar.firebaseapp.com",
+            databaseURL: "https://wiless.firebaseio.com",
+            projectId: "sendildevar",
+            storageBucket: "gcrapps",
+            messagingSenderId: "554219100937",
+            appId: "1:554219100937:web:7e8dc521b4a7e94b23d1d8",
+            measurementId: "G-TW4LTM2R0Y"
+        };
 
+
+        function loadfbConfig(src) {
+
+            var jsonresult = fetch("/fbconfig-local.json").then(
+                res => {
+                    console.log(res.status);
+                    if (!res.ok) {
+                        console.log("returning .. default", defaultfb);
+
+                        return defaultfb
+                    }
+                    obj = res.json();
+                    console.log("returning .. default", obj);
+                    return obj;
+                });
+            return jsonresult;
+        }
+
+
+
+
+
+        window.onload = () => {
+            console.log(loadfbConfig("Window Load"));
+        }
+    </script>
 
 
     <style>
@@ -652,9 +691,9 @@
 
 
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.4"></script>
-    <script type="module">
+
+
+    <script type="module" defer>
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-analytics.js";
@@ -666,23 +705,10 @@
 
 
 
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-            apiKey: "AIzaSyCA2SJwPEXnWB9MBJgvNbrCzNydrMctFpc",
-            authDomain: "sendildevar.firebaseapp.com",
-            databaseURL: "https://sare.asia-southeast1.firebasedatabase.app/", // https://sendildevar-default-rtdb.asia-southeast1.firebasedatabase.app
-            projectId: "sendildevar",
-            storageBucket: "sendildevar.appspot.com",
-            messagingSenderId: "554219100937",
-            appId: "1:554219100937:web:7e8dc521b4a7e94b23d1d8",
-            measurementId: "G-TW4LTM2R0Y"
-        };
-
-
+        var firebaseConfig = await window.loadfbConfig("inside module");
         // Initialize Firebase
+        console.log("Got it ", firebaseConfig);
+
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
@@ -729,8 +755,7 @@
         });
         var recentstatus;
         document.getElementById("loadjobs").onclick = () => {
-            console.log("user ", currentUser.uid);
-
+            console.log("For user ", currentUser);
             getRecentJobs(currentUser.uid);
 
         }
@@ -876,27 +901,27 @@
             }
             );
 
-
+            var outpath = "SLS/" + currentUser.uid + "/" + jobid;
+            console.log("Look for files here ", outpath);
             /// STORAGE
             {
-                const fileref = sref(storage, "results/c8lqacopv5b9tohrdvi0/output.json")
+                const fileref = sref(storage, outpath + "/output.json")
+                console.log("OUTPUT File ", outpath + "/output.json");
                 getDownloadURL(fileref).then(url => {
                     console.log("Download 1", fileref.name, " url is ", url);
                     d3.json(url).then(obj => {
                         new Inspector(document.getElementById("filelist")).fulfilled(obj);
-                        // PlotCDF(obj, "BestSINR");
                         console.log("Downloading nwlayout ", obj.nwlayout.MediaLink);
                         d3.csv(obj.nwlayout.MediaLink, d3.autoType).then(data => { PlotScatter(data) }
                         );
                     }
                     );
                 }).catch((error) => {
-                    // https://firebase.google.com/docs/storage/web/handle-errors
                     console.log(error.code);
                 });
             }
             {
-                const fileref = sref(storage, "results/c8lqacopv5b9tohrdvi0/nwlayout.csv")
+                const fileref = sref(storage, outpath + "/nwlayout.csv")
                 getDownloadURL(fileref).then(url => {
                     console.log("Download 1", fileref.name, " url is ", url);
                     d3.csv(url, d3.autoType).then(obj => {
@@ -905,12 +930,11 @@
                     }
                     );
                 }).catch((error) => {
-                    // https://firebase.google.com/docs/storage/web/handle-errors
                     console.log(error.code);
                 });
             }
             {
-                const fileref = sref(storage, "results/c8lqacopv5b9tohrdvi0/slsprofile.csv")
+                const fileref = sref(storage, outpath + "/slsprofile.csv")
                 getDownloadURL(fileref).then(url => {
                     console.log("Download 2", fileref.name, " url is ", url);
                     d3.csv(url, d3.autoType).then(obj => {
@@ -964,19 +988,12 @@
                     console.log("Error Fetching list ALl DOCUMENTS in storage");
                 });;
         }
+        /**
+        * @param {string} uid - is the UID of the user 
+        * */
         function getRecentJobs(uid) {
             var jobpath = "users/" + uid + "/status";
             console.log("getRecentJobs : ", jobpath);
-
-            // get(child(rtdb, jobpath)).then((snapshot) => {
-            // if (snapshot.exists()) {
-            // console.log(snapshot.val());
-            // } else {
-            // console.log("No data available");
-            // }
-            // }).catch((error) => {
-            // console.error(error);
-            // });
             document.getElementById("joblist").innerHTML = "";
             var count = 0;
             var badgelem = document.querySelector("span.mdl-badge");
@@ -985,9 +1002,7 @@
 
                 if (snapshot.exists()) {
                     const inspect = Inspector.into(document.getElementById("joblist"));
-                    console.log("Response ", snapshot.val());
                     const jobs = snapshot.val();
-                    console.log("Status is ", jobs);
                     snapshot.forEach((childSnapshot) => {
                         count++;
                         badgelem.setAttribute("data-badge", count);
@@ -1302,6 +1317,7 @@
 
 
     <script type="text/javascript">
+
 
 
         $(document).ready(function () {

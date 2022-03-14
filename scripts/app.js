@@ -1,5 +1,6 @@
 console.log("App jS loaded");
 
+
 function loadspec(specname, obj, fname) {
 
     if (slsinfo[globalcounter] == undefined) {
