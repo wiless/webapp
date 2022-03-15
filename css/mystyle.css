@@ -11,7 +11,18 @@
     right: 28px;
     width: 280px;
 }
-
+.profile-pic {
+    position: fixed;
+    top: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 60%;
+    border: 5px solid rgba(245, 239, 239, 0.178);
+    float: none;
+    display: block;
+    margin: 25px auto;
+    pointer-events: none;
+}
 input[type=file]{
     opacity: 0;
     cursor: pointer;

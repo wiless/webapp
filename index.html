@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Local Firebase testing dashboard">
+    <meta name="description" content="Wireless Simulation Tools for IMT and ITU-R related - Sendil Devar">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wireless Tools by Sendil Devar</title>
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
@@ -83,14 +83,10 @@
 
             var jsonresult = fetch("/fbconfig-local.json").then(
                 res => {
-                    console.log(res.status);
                     if (!res.ok) {
-                        console.log("returning .. default", defaultfb);
-
                         return defaultfb
                     }
                     obj = res.json();
-                    console.log("returning .. default", obj);
                     return obj;
                 });
             return jsonresult;
@@ -200,15 +196,37 @@
         </header>
         <div class="mdl-layout__drawer">
             <!-- <img src="static/mark.png" alt=""> -->
-            <img src='static/mark2.png' style:"background-size: contain;max-height:120px;" portrait
-                onclick="switchImage()"> </img>
-            <span class="mdl-layout-title">User</span>
+            <img src='static/mark2.png' style="background-size: contain;" portrait onclick="switchImage()"> </img>
+            <!-- <div class="mdl-list__item-avatar material-icons" style="position: fixed;top: 10px;"> -->
+            <img class="profile-pic" src="" hidden alt="Profile Pic">
+
+            <!-- </div> -->
+
+
+            <span class="mdl-layout-title">
+                <div id="username" style="font-size:  0.7em;"> </div>
+                <div class="mdl-tooltip" data-mdl-for="username">
+                    Provider
+                </div>
+            </span>
+
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="#plots">M.2101 </a>
-                <a class="mdl-navigation__link" href="">SLS Simulator</a>
-                <a class="mdl-navigation__link" href="">Plots</a>
-                <a class="mdl-navigation__link" href="">ITU-R Models</a>
-                <button id="show-dialog" type="button" class="mdl-button">Show Dialog</button>
+                <a class="mdl-navigation__link " href="#"> <i class="material-icons"> view_quilt </i> Public
+                    Results
+                </a>
+                <a class="mdl-navigation__link " href="#"> <i class="material-icons"> architecture </i> M.2101
+                    (live) </a>
+                <!-- <a class="mdl-navigation__link" href="">SLS Simulator</a> -->
+                <a class="mdl-navigation__link " href="#"> <i class="material-icons"> 5g </i> Cellular
+                    (live) </a>
+                <a class="mdl-navigation__link " href="#"> <i class="material-icons"> wifi_channel </i>
+                    ITU-R Models(live) </a>
+
+                <a class="mdl-navigation__link " href="#jobs" disabled> <i class="material-icons"> work_history </i>
+                    Jobs History </a>
+
+                <label class="mdl-navigation__link mdl-button--primary" href="" id="show-dialog">Submit Job</label>
+                <!-- <button id="show-dialog" type="button" class="mdl-button">Submit Job</button> -->
             </nav>
         </div>
         <dialog class="mdl-dialog">
@@ -274,6 +292,42 @@
 
 
         <main class="mdl-layout__content ">
+            <!-- Colored FAB button with ripple -->
+            <div style="position:fixed;z-index:9999;right: 25px;bottom: 25px;transform: rotate(0deg);">
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+                    id="addjob">
+                    <i class="material-icons">add</i>
+                </button>
+
+
+
+                <div class="mdl-list mdl-menu mdl-menu--top-right mdl-js-menu mdl-js-ripple-effect" for="addjob">
+                    <div class="mdl-list__item mdl-menu__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-icon">cell_tower</i>
+                            <span>M.2101</span>
+                        </span>
+                        <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">add</i></a>
+                    </div>
+                    <div class="mdl-list__item mdl-menu__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-icon">5g</i>
+                            <span>M.2412 (5G)</span>
+                        </span>
+                        <!-- <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">add</i></a> -->
+                    </div>
+                    <div class="mdl-list__item mdl-menu__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-icon">wifi_channel</i>
+                            <span>More..</span>
+                        </span>
+                        <span class="mdl-list__item-secondary-content">
+                            <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             <!-- <div class="row">
                 <div class="one column">One</div>
                 <div class="eleven columns">Eleven</div>
@@ -287,10 +341,7 @@
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-mobile mdl-cell--8-col-tablet  ">
                     <div class="mdl-card mdl-shadow--2dp mdl-card-full">
                         <div class="mdl-card__title">
-                            <div id="username"> </div>
-                            <div class="mdl-tooltip" data-mdl-for="username">
-                                Provider
-                            </div>
+
 
 
                         </div>
@@ -331,8 +382,8 @@
                             Logs & Status
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
-                            <div id="jobstatus">
 
+                            <div id="jobstatus">
                                 <!-- <div id="firebaseui-auth-container"></div> -->
                             </div>
 
@@ -540,10 +591,6 @@
 
                 </div>
 
-
-
-
-
                 <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet " id="plots">
                     <div class="mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title">
@@ -630,33 +677,29 @@
 
     <script>
 
-
-
-        var selectedbot = "https://webapps.sendildevar.in";
+        var selectedbot = "";
         function selectBot(params) {
+
             if (params == "local") {
-                wiless.apiurl = "http://localhost:8080"
+                wiless.APIhost = "http://localhost:8080"
                 document.getElementById("servicehost").innerText = "cloud_off";
             }
 
             if (params == "gae") {
-                wiless.apiurl = "https://wilessapi.appspot.com/"
+                wiless.APIhost = "https://wilessapi.appspot.com/"
                 document.getElementById("servicehost").innerText = "cloud_sync";
             }
 
             selectedbot = params;
         }
         var runtime = {};
-        var basepath = "/SAREPH3/dg1";
-        var adminpath = basepath + "/admin";
-        var livepath = basepath + "/live";
-        var basepath2 = "/SAREPH3/devel";
-        var livepath2 = basepath2 + "/live";
 
         function switchImage() {
             document.querySelector("img").toggleAttribute("portrait");
             if (document.querySelector("img").getAttribute("portrait") != null) {
                 document.querySelector("img").src = "/static/mark2.png"
+
+
             } else {
                 document.querySelector("img").src = "/static/mark1.png"
             }
@@ -665,8 +708,18 @@
 
 
         function displayUserInfo(user) {
-            // console.log("After Sign Popop", user);
-            document.getElementById("username").innerText = user.email;
+            console.log("displayUserInfo() : ", user);
+            if (user.photoURL != null) {
+                document.querySelector("profile-pic").src = user.photoURL;
+            }
+
+
+            if (user.displayName != null) {
+                document.getElementById("username").innerText = user.displayName;
+            } else {
+                document.getElementById("username").innerText = user.email;
+            }
+
             document.querySelector("#username + div[data-mdl-for='username']").innerHTML = `${user.metadata.lastSignInTime} </br> <i>By  ${user.providerData[0].providerId} </i> </br>
             ${user.uid}`
             user.getIdTokenResult().then(
@@ -699,11 +752,8 @@
         import { getStorage, listAll, ref as sref, getMetadata, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-storage.js";
 
 
-
-        var firebaseConfig = await window.loadfbConfig("inside module");
         // Initialize Firebase
-        console.log("Got it ", firebaseConfig);
-
+        var firebaseConfig = await window.loadfbConfig("inside module");
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
@@ -721,73 +771,51 @@
 
         auth.onAuthStateChanged(user => {
             if (user != null) {
+                console.log("onAuthStateChanged()", user);
+                currentUser = user;
                 user.getIdToken(/* forceRefresh */ false).then(function (idToken) {
                     // Send token to your backend via HTTPS
-                    // ...
-                    console.log("the user is ", user);
-                    console.log("ID token is ", idToken);
                     wiless.id_token = idToken;
                 }).catch(function (error) {
                     // Handle error
                     console.log("Error Getting token ", error);
                 });
-                currentUser = user;
-                // console.log("Seems login changed ", user);
                 displayUserInfo(user);
-                // const hellofile = ref(storage, 'SLS/hello.json');
-                // var path = "SLS/eG7vjzb173cvJo7YoxuVsILyGKQ2/sharmalsheik.jpg";
-                // path = "x.png";
-                // getDownloadURL(sref(storage, path)).then(url => {
-                //     console.log("File link for download ", url)
-                //     var elm = document.getElementById("plotbubble");
-                //     var inspect = new Inspector(elm).fulfilled(url);
-                //     // inspect().fulfilled("Total Entries " + querySnapshot.size);
-                // }
-                // );
-
             }
 
         });
-        var recentstatus;
         document.getElementById("loadjobs").onclick = () => {
             console.log("For user ", currentUser);
             getRecentJobs(currentUser.uid);
 
         }
-        document.getElementById("runsls").onclick = () => {
-
-            // var subscription = getSubscriptionToken();
-            // var obj = { ...slsinfo[globalcounter], gcm: subscription, useremail: userprofile.getEmail() };
-            var obj = { ...slsinfo[globalcounter], app: "sls" };
-            console.log("Submitting Job (runSLS) ", obj);
-            wiless.APIcalls("submitjob", obj).then(result => {
-                console.log(result)
-                watch(result.data);
+        function submitJob(jobname, jobparams) {
+            wiless.APIcalls("submitjob", jobparams, jobname).then(result => {
+                console.log("Job ", jobname, "Result", result);
+                watch(result.data, jobname);
             });
+        }
+        document.getElementById("runsls").onclick = () => {
+            var jobparams = { ...slsinfo[globalcounter] };
+            submitJob("sls", jobparams);
+
+
         };
         document.getElementById("runm2101").onclick = () => {
-
-            // var subscription = getSubscriptionToken();
-            // var obj = { ...slsinfo[globalcounter], gcm: subscription, useremail: userprofile.getEmail() };
-
-            var obj = { imt: editor.get(), app: "m2101" };
-
-            console.log("Submitting Job (runM2101) ", obj);
-            wiless.APIcalls("submitjob", obj).then(result => {
-                console.log(result)
-                watch(result.data);
-            });
+            var jobparams = { imt: editor.get() };
+            submitJob("m2101", jobparams);
         };
-        function watch(jobid) {
+        function watch(jobid, appname) {
             console.log("Current user ", currentUser);
             var jobpath = "users/" + currentUser.uid + "/status/" + jobid;
             console.log("Watching Path ", jobpath, jobid);
+            const inspector = Inspector.into("#jobstatus"); //(document.querySelector("#jobstatus")).fulfilled(status);
             onValue(ref(rtdb, jobpath), (d) => {
                 const status = d.val();
                 console.log("Status is ", status);
-                document.getElementById("jobstatus").innerText = jobid;
-
-                new Inspector(document.querySelector("#jobstatus")).fulfilled(status);
+                document.getElementById("jobstatus").innerHTML = `${appname} :  ${jobid}`;
+                inspector().fulfilled(status);
+                // new Inspector(document.querySelector("#jobstatus")).fulfilled(status);
                 // Notification.requestPermission(function (result) {
                 //     if (result === 'granted') {
                 //         navigator.serviceWorker.ready.then(function (registration) {
@@ -1266,7 +1294,7 @@
     </script>
     <script>
 
-        var editor;
+        var editor = new JSONEditor(document.getElementById('output'), { mode: 'code' });
         function openForm() {
             console.log("Opening login form");
             document.getElementById("myForm").style.display = "block";

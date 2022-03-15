@@ -5,12 +5,11 @@ let wiless = new API();
 function API() {
   let _magicword = "sendil";
   let headers;
-  let apiurl;
   let id_token;
   let funcpaths = new Map();
 
   (function () {
-    apiurl = "http://localhost:8080";
+
     funcpaths.set("new", { path: "/new", method: "get" })
       .set("system", { path: "/system", method: "get" })
       .set("login", { path: "/login", method: "post" })
@@ -22,10 +21,10 @@ function API() {
       .set("google", { path: "/auth/google", method: "post" });
 
     headers = { 'Authorization': "Bearer " + id_token };
-    console.log("Wiless API : " + apiurl + " Instance Created..");
+    console.log("Wiless API : " + " Instance Created..");
   })();
 
-
+  this.APIhost = "http://localhost:8080";
   this.Ping = () => {
     // console.log("Ping");
     return "ping";
@@ -44,7 +43,7 @@ function API() {
     return this.id_token;
   }
 
-  this.APIcalls = function (arg, jdata) {
+  this.APIcalls = function (arg, jdata, appname) {
     if (arg == "logout") {
       id_token = "";
       this.id_token = "";
@@ -62,7 +61,7 @@ function API() {
     }
 
 
-    return this.CallAPI(val.path, val.method, jdata);
+    return this.CallAPI(val.path, val.method, jdata, appname);
 
 
   }
@@ -73,24 +72,32 @@ function API() {
     return this.CallAPI(val.path, val.method, jdata).then(d => { headers = { 'Authorization': "Bearer " + d.token }; this.id_token = d.token; return d.token });
   }
 
-  this.CallAPI = function (path, method, data) {
-    // console.log("calling callapi : ", path);
+  this.CallAPI = function (path, method, data, appname) {
     if (method == undefined) {
       method = "GET"
     }
+    const url = new URL(this.APIhost);
+    url.pathname = path;
+    if (appname != undefined) {
+      url.searchParams.append("appname", appname);
+    }
+
+    console.log("URL object : ", url);
+    console.log("CallAPI href: ", url.href);
+    // for (const [k, v] of Object.entries(argobj)) { url.searchParams.append(k, v); }
 
     var headers = {};
     if (wiless.Token() != undefined) {
       headers = { 'Authorization': "Bearer " + wiless.Token() };
-      console.log("Header is  ", headers);
-      console.log("Bearer Token is ", wiless.Token());
+      // console.log("Header is  ", headers);
+      // console.log("Bearer Token is ", wiless.Token());
     } else {
       console.log("No AUTH token found !");
     }
 
 
     // headers = {};
-    return fetch(this.apiurl + path, {
+    return fetch(url, {
       method: method,
       credentials: "include",
       headers: headers,
