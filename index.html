@@ -30,7 +30,7 @@
     <script src="/static/jquery.min.js"></script>
     <script src="/static/semantic.min.js"></script>
     <link rel="stylesheet" href="/static/beagle.css" type="text/css" media="screen" charset="utf-8">
-    <script src="/scripts/plot.js" type="module">   </script>
+    <script src="/scripts/plot.js" type="module"> async  </script>
     <script src="/scripts/api.js"></script>
     <script src="/scripts/app.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -143,7 +143,6 @@
 
 <body>
 
-    <!-- mdl-layout--fixed-drawer -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header ">
         <header class="mdl-layout__header ">
             <!-- mdl-layout__header--scroll -->
@@ -158,6 +157,7 @@
 
                 <nav class="mdl-navigation">
                     <!-- Add MDL Navigation Links here -->
+
                     <button id="card4menu" class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">more_vert</i>
                     </button>
@@ -188,7 +188,9 @@
                         </li>
                     </ul>
 
-
+                    <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="0" id="jobsid">
+                        notifications
+                    </div>
                 </nav>
 
 
@@ -229,16 +231,24 @@
                 <!-- <button id="show-dialog" type="button" class="mdl-button">Submit Job</button> -->
             </nav>
         </div>
-        <dialog class="mdl-dialog">
-            <h4 class="mdl-dialog__title">Allow data collection?</h4>
-            <div class="mdl-dialog__content">
-                <p>
-                    Allowing us to collect data will let us get you the information you want faster.
-                </p>
+        <dialog class="mdl-dialog" id="dlgjob" style="width: 70%;max-height: 50%;">
+            <h4 class="mdl-dialog__title">Submit Job?</h4>
+            <div class="mdl-dialog__content ">
+                <div id="informaton">
+                    This is sample information about the app and the required configuration
+                </div>
+                <div id="jobconfiguration" style="display: block;">
+                </div>
+                <div id="sampleview">
+                </div>
+
+
+                <p> Credit: <a href="https://observablehq.com/@wiless/configuration-editors">Configuration Editors by
+                        ssk</a></p>
             </div>
-            <div class="mdl-dialog__actions">
-                <button type="button" class="mdl-button accept">Agree</button>
-                <button type="button" class="mdl-button close">Disagree</button>
+            <div class=" mdl-dialog__actions ">
+                <button type="button" class="mdl-button accept">Submit</button>
+                <button type="button" class="mdl-button close">Cancel</button>
             </div>
         </dialog>
 
@@ -1490,12 +1500,19 @@
         }
         showDialogButton.addEventListener('click', function () {
             // dialog.show();
+            const el = document.querySelector(".mdl-layout")
+            el.MaterialLayout.toggleDrawer();
+
+            dialog.querySelector("h4").innerHTML = "Submit SLS Simulation"
+            // module.redefine("slsdefault", { name: "sendil", son: "kavish" });
+
             dialog.showModal();
 
         });
         dialog.close();
         dialog.querySelector('.accept').addEventListener('click', function () {
-            console.log("Accepting ..");
+            console.log("Accepting ..", window.jobparam);
+            submitJob("sls", window.jobparam);
             dialog.close();
         });
 
