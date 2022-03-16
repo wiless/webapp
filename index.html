@@ -74,16 +74,21 @@
 
 
         function loadfbConfig(src) {
+            // fbconfig-local.json
+            if (window.location.href.startsWith("http://localhost")) {
+                var jsonresult = fetch("/fbconfig-local.json").then(
+                    res => {
+                        if (!res.ok) {
+                            return defaultfb
+                        }
+                        obj = res.json();
+                        return obj;
+                    });
+                return jsonresult;
+            } else {
+                return defaultfb;
+            }
 
-            var jsonresult = fetch("/fbconfig-local.json").then(
-                res => {
-                    if (!res.ok) {
-                        return defaultfb
-                    }
-                    obj = res.json();
-                    return obj;
-                });
-            return jsonresult;
         }
 
 
