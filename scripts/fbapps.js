@@ -2,7 +2,7 @@ console.log("Firebase jS loaded");
 /* <script type="module"> */
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-analytics.js";
+// import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-analytics.js";
 import { getAuth, signOut, signInWithPopup, EmailAuthProvider, GoogleAuthProvider, SignInMethod, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-auth.js";
 import { getDatabase, child, get, query, orderByKey, limitToLast, ref, onChildAdded, update, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js"
 // import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-messaging.js";
@@ -13,7 +13,7 @@ import { getStorage, listAll, ref as sref, getMetadata, getDownloadURL } from "h
 // Initialize Firebase
 var firebaseConfig = await window.loadfbConfig("inside module");
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const gprovider = new GoogleAuthProvider();
 
