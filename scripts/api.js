@@ -108,6 +108,8 @@ function API() {
     }).then(function (rdata) {
       console.log(method, ":", path, '=>', rdata);
       return rdata;
+    }).catch(error => {
+      throw (error);
     });
   }
 

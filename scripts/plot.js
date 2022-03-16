@@ -13,7 +13,7 @@ var runtime = new Runtime();
 //     return ["viewof myval"].includes(name);
 // });
 const module = runtime.module(define, name => {
-    console.log("Processing ....... ", name);
+    // console.log("Processing ....... ", name);
     if (name === "viewof slseditor") {
         console.log(name);
         return new Inspector(document.getElementById("jobconfiguration"));
@@ -45,9 +45,8 @@ const module = runtime.module(define, name => {
             },
             fulfilled(val) {
                 console.log("Value of slsparam changed ", val);
-                var jobparam = JSON.parse(val)
-                window.jobparam = jobparam;
-
+                // var jobparam = JSON.parse(val)
+                window.jobparam = val;
                 var elm = document.getElementById("sampleview");
                 elm.removeChild(elm.lastChild);
                 Inspector.into(document.getElementById("sampleview"))().fulfilled(jobparam);

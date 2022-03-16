@@ -799,6 +799,32 @@
             getRecentJobs(currentUser.uid);
 
         }
+        var dialog = document.querySelector('dialog');
+        var showDialogButton = document.querySelector('#show-dialog');
+        if (!dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+        showDialogButton.addEventListener('click', function () {
+            // dialog.show();
+            const el = document.querySelector(".mdl-layout")
+            el.MaterialLayout.toggleDrawer();
+
+            dialog.querySelector("h4").innerHTML = "Submit SLS Simulation"
+            // module.redefine("slsdefault", { name: "sendil", son: "kavish" });
+
+            dialog.showModal();
+
+        });
+        dialog.close();
+        dialog.querySelector('.accept').addEventListener('click', function () {
+            console.log("Accepting ..", window.jobparam);
+            submitJob("sls", window.jobparam);
+            dialog.close();
+        });
+
+        dialog.querySelector('.close').addEventListener('click', function () {
+            dialog.close();
+        });
         function submitJob(jobname, jobparams) {
             wiless.APIcalls("submitjob", jobparams, jobname).then(result => {
                 console.log("Job ", jobname, "Result", result);
@@ -1493,32 +1519,7 @@
 
     </script>
     <script>
-        var dialog = document.querySelector('dialog');
-        var showDialogButton = document.querySelector('#show-dialog');
-        if (!dialog.showModal) {
-            dialogPolyfill.registerDialog(dialog);
-        }
-        showDialogButton.addEventListener('click', function () {
-            // dialog.show();
-            const el = document.querySelector(".mdl-layout")
-            el.MaterialLayout.toggleDrawer();
 
-            dialog.querySelector("h4").innerHTML = "Submit SLS Simulation"
-            // module.redefine("slsdefault", { name: "sendil", son: "kavish" });
-
-            dialog.showModal();
-
-        });
-        dialog.close();
-        dialog.querySelector('.accept').addEventListener('click', function () {
-            console.log("Accepting ..", window.jobparam);
-            submitJob("sls", window.jobparam);
-            dialog.close();
-        });
-
-        dialog.querySelector('.close').addEventListener('click', function () {
-            dialog.close();
-        });
     </script>
 </body>
 
