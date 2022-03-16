@@ -9,16 +9,15 @@
     <title>Wireless Tools by Sendil Devar</title>
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <!-- <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css"> -->
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="css/mystyle.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" async>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" async>
+    <link rel="stylesheet" href="css/mystyle.css" async>
     <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css' async>
 
 
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@3/dist/inspector.css">
+
     <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <!-- <link rel="stylesheet" href="/css/normalize.css">
@@ -28,33 +27,23 @@
     <!-- Scripts
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="/static/jquery.min.js"></script>
-    <script src="/static/semantic.min.js"></script>
-    <link rel="stylesheet" href="/static/beagle.css" type="text/css" media="screen" charset="utf-8">
-
-    <!-- <script src="/scripts/api.js"></script>
-    <script src="/scripts/app.js"></script> -->
+    <!-- <script src="/static/semantic.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="/static/beagle.css" type="text/css" media="screen" charset="utf-8"> -->
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> -->
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script> -->
 
-    <!-- <script src="https://unpkg.com/@observablehq/inspector/dist/inspector.js" crossorigin></script>
-    <link crossorigin rel="stylesheet" href="https://unpkg.com/@observablehq/inspector@3.2.2/dist/inspector.css"> -->
+    <link crossorigin rel="stylesheet" href="https://unpkg.com/@observablehq/inspector@3.2.2/dist/inspector.css">
 
 
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/d3@6"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1"></script>
+
+
+
     <meta name="google-signin-client_id"
         content="565126014426-fis7623ann950k0i711upje0o5kt3qhp.apps.googleusercontent.com">
     <meta name="google-signin-cookiepolicy" content="single_host_origin">
     <meta name="google-signin-scope" content="profile email">
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.4"></script>
+
 
     <link href="/static/jsoneditor.css" rel="stylesheet" type="text/css">
     <script src="/static/jsoneditor.js"></script>
@@ -199,10 +188,10 @@
         </header>
         <div class="mdl-layout__drawer">
             <!-- <img src="static/mark.png" alt=""> -->
-            <img src='static/mark2.png' style="background-size: contain;" portrait onclick="switchImage()"
-                loading="lazy"> </img>
+            <img src='static/mark1.png' style="background-size: contain;" portrait onclick="switchImage()"
+                loading="lazy" defer> </img>
             <!-- <div class="mdl-list__item-avatar material-icons" style="position: fixed;top: 10px;"> -->
-            <img class="profile-pic" src="" hidden alt="Profile Pic">
+            <img class="profile-pic" src="" hidden alt="Profile Pic" loading="lazy" defer>
 
             <!-- </div> -->
 
@@ -684,142 +673,10 @@
 
 
 
+    <script src="/scripts/wiless.js" async></script>
+    <script src="/scripts/webapp.js" async></script>
 
 
-    <script>
-
-        var selectedbot = "";
-
-        function selectBot(params) {
-
-            if (params == "local") {
-                wiless.APIhost = "http://localhost:8080"
-                document.getElementById("servicehost").innerText = "cloud_off";
-            }
-
-            if (params == "gae") {
-                wiless.APIhost = "https://wilessapi.appspot.com/"
-                document.getElementById("servicehost").innerText = "cloud_sync";
-            }
-
-            selectedbot = params;
-        }
-        var runtime = {};
-
-        function switchImage() {
-            document.querySelector("img").toggleAttribute("portrait");
-            if (document.querySelector("img").getAttribute("portrait") != null) {
-                document.querySelector("img").src = "/static/mark2.png"
-
-
-            } else {
-                document.querySelector("img").src = "/static/mark1.png"
-            }
-
-        }
-
-
-        function displayUserInfo(user) {
-            console.log("displayUserInfo() : ", user);
-            if (user.photoURL != null) {
-                document.querySelector("profile-pic").src = user.photoURL;
-            }
-
-
-            if (user.displayName != null) {
-                document.getElementById("username").innerText = user.displayName;
-            } else {
-                document.getElementById("username").innerText = user.email;
-            }
-
-            document.querySelector("#username + div[data-mdl-for='username']").innerHTML = `${user.metadata.lastSignInTime} </br> <i>By  ${user.providerData[0].providerId} </i> </br>
-            ${user.uid}`
-            user.getIdTokenResult().then(
-                d => {
-                    // for (const [k, v] of Object.entries(d.claims)) { console.log(k, v) }
-                    var key = "slsuser"
-                    var enabled = d.claims[key];
-                    if (enabled != undefined) {
-                        console.log(key, enabled);
-                    }
-
-                }
-            );
-
-        }
-
-
-
-        // var editor = new JSONEditor(document.getElementById('output'), { mode: 'code' });
-        function openForm() {
-            console.log("Opening login form");
-            document.getElementById("myForm").style.display = "block";
-        }
-
-        function closeForm() {
-            document.getElementById("myForm").style.display = "none";
-        }
-
-        document.getElementById('inputfile')
-            .addEventListener('change', function (e) {
-
-                var fr = new FileReader();
-                var fname = this.files[0].name;
-                document.getElementById("filename").innerText = fname; // this.files[0].name;
-
-
-                fr.onload = function () {
-                    el = document.getElementById('output');
-                    // el.removeChild(el.lastChild);
-                    // el.textContent=fr.result; 
-
-                    try {
-                        json = JSON.parse(fr.result);
-                        if (!el.firstElementChild) {
-                            editor = new JSONEditor(el, { mode: 'view', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, json);
-                        } else {
-                            editor.set(jsob)
-
-                        }
-                    } catch (e) {
-                        document.getElementById("filename").innerText = fname + " Not JSON parsable";
-                    }
-
-
-                    // const editor = new JSONEditor(el, {mode: 'view', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, json);
-
-                }
-                fr.readAsText(this.files[0]);
-            });
-
-
-
-        $(document).ready(function () {
-
-            window.onload = function () {
-
-                console.log("window.location.href", window.location.href);
-                if (window.location.href.startsWith("http://localhost")) {
-
-                    selectBot("local");
-                } else {
-                    selectBot("gae");
-                }
-                // if (document.getElementsByClassName('.ui.accordion').length > 0) {
-                //     $('.ui.accordion').accordion();
-                // }
-
-
-
-                //     $('.ui.sidebar')
-                //         .sidebar('attach events', '.toc.item')
-                //       ;
-
-            };
-        });
-
-
-    </script>
 
     <script>
         var itueditor, simeditor, nreditor;
@@ -901,58 +758,26 @@
         });
 
     </script>
-    <script type="module">
+    <!-- <script type="module">
         // var data = [1, 5, 52, 123];
         // const domContainer = document.querySelector('#like_button_container');
         import { Inspector } from "https://unpkg.com/@observablehq/inspector?module";
         window.Inspector = Inspector;
 
 
-    </script>
-    <script>
+    </script> -->
 
 
-        function init() {
-            // var start = moment().subtract(29, 'days');
-            // function cb(start, end) {
-            //     $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            // }
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@3/dist/inspector.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/inspector@3/dist/inspector.js" defer></script>
 
-
-            // var end = moment();
-            //     $("#daterange").daterangepicker({
-            //         opens: 'left',
-            //         minYear: 2021,
-            //         showDropdowns: true,
-            //         timePickerIncrement: 30,
-            //         ranges: {
-            //             'Today': [moment(), moment()],
-            //             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            //             'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            //             'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            //             'This Month': [moment().startOf('month'), moment().endOf('month')],
-            //             'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            //         },
-            //         locale: {
-            //             format: 'DD/MMM hh:mm A'
-            //         }
-            //     }, function (start, end, label) {
-            //         console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
-            //     });
-            // });
-        };
-
-    </script>
-
-
-    <script src="/scripts/api.js" async></script>
-    <script src="/scripts/app.js" async></script>
-    <script src="/scripts/fbapps.js" type="module" async loading="lazy"
-        onload="console.log('loading fbapps.js done')"></script>
-    <script src="/scripts/plot.js" type="module" async loading="lazy"
+    <script src="/scripts/fbapps.js" type="module" async onload="console.log('loading fbapps.js done')"></script>
+    <script src="/scripts/plot.js" type="defer" async loading="lazy"
         onload="console.log('loading plot.js done')"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.4" defer></script>
 </body>
 
 </html>

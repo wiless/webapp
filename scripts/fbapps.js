@@ -8,7 +8,7 @@ import { getDatabase, child, get, query, orderByKey, limitToLast, ref, onChildAd
 // import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-messaging.js";
 import { collection, getFirestore, doc, getDoc, getDocs, query as dbquery, where, limit, orderBy } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-firestore.js";
 import { getStorage, listAll, ref as sref, getMetadata, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-storage.js";
-
+import { Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
 
 // Initialize Firebase
 var firebaseConfig = await window.loadfbConfig("inside module");

@@ -1,5 +1,129 @@
 console.log("App jS loaded");
-{/* <script type="module"> */ }
+var selectedbot = "";
+
+function selectBot(params) {
+
+    if (params == "local") {
+        wiless.APIhost = "http://localhost:8080"
+        document.getElementById("servicehost").innerText = "cloud_off";
+    }
+
+    if (params == "gae") {
+        wiless.APIhost = "https://wilessapi.appspot.com/"
+        document.getElementById("servicehost").innerText = "cloud_sync";
+    }
+
+    selectedbot = params;
+}
+
+function switchImage() {
+    document.querySelector("img").toggleAttribute("portrait");
+    if (document.querySelector("img").getAttribute("portrait") != null) {
+        document.querySelector("img").src = "/static/mark2.png"
+
+
+    } else {
+        document.querySelector("img").src = "/static/mark1.png"
+    }
+
+}
+
+
+function displayUserInfo(user) {
+    console.log("displayUserInfo() : ", user);
+    if (user.photoURL != null) {
+        document.querySelector("profile-pic").src = user.photoURL;
+    }
+
+
+    if (user.displayName != null) {
+        document.getElementById("username").innerText = user.displayName;
+    } else {
+        document.getElementById("username").innerText = user.email;
+    }
+
+    document.querySelector("#username + div[data-mdl-for='username']").innerHTML = `${user.metadata.lastSignInTime} </br> <i>By  ${user.providerData[0].providerId} </i> </br >
+    ${user.uid} `
+    user.getIdTokenResult().then(
+        d => {
+            // for (const [k, v] of Object.entries(d.claims)) { console.log(k, v) }
+            var key = "slsuser"
+            var enabled = d.claims[key];
+            if (enabled != undefined) {
+                console.log(key, enabled);
+            }
+
+        }
+    );
+
+}
+
+function openForm() {
+    console.log("Opening login form");
+    document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+}
+
+document.getElementById('inputfile')
+    .addEventListener('change', function (e) {
+
+        var fr = new FileReader();
+        var fname = this.files[0].name;
+        document.getElementById("filename").innerText = fname; // this.files[0].name;
+
+
+        fr.onload = function () {
+            el = document.getElementById('output');
+            // el.removeChild(el.lastChild);
+            // el.textContent=fr.result; 
+
+            try {
+                json = JSON.parse(fr.result);
+                if (!el.firstElementChild) {
+                    editor = new JSONEditor(el, { mode: 'view', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, json);
+                } else {
+                    editor.set(jsob)
+
+                }
+            } catch (e) {
+                document.getElementById("filename").innerText = fname + " Not JSON parsable";
+            }
+
+
+            // const editor = new JSONEditor(el, {mode: 'view', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, json);
+
+        }
+        fr.readAsText(this.files[0]);
+    });
+
+
+
+$(document).ready(function () {
+
+    window.onload = function () {
+
+        console.log("window.location.href", window.location.href);
+        if (window.location.href.startsWith("http://localhost")) {
+
+            selectBot("local");
+        } else {
+            selectBot("gae");
+        }
+        // if (document.getElementsByClassName('.ui.accordion').length > 0) {
+        //     $('.ui.accordion').accordion();
+        // }
+
+
+
+        //     $('.ui.sidebar')
+        //         .sidebar('attach events', '.toc.item')
+        //       ;
+
+    };
+});
 
 
 

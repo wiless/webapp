@@ -4,6 +4,7 @@ import { Runtime, Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/r
 // import { define as plotnotebook } from "https://api.observablehq.com/d/615db00138777bf8.js?v=3";
 import define from "https://api.observablehq.com/@wiless/configuration-editors.js?v=3";
 
+window.Inspector = Inspector;
 // https://observablehq.com/@wiless/configuration-editors
 // window.Inspector = Inspector;
 
