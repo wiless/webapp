@@ -35,7 +35,7 @@ const module = runtime.module(define, name => {
 
     }
     if (name === "slseditor") {
-        console.log(name);
+        // console.log(name);
         return {
             rejected(error) {
                 console.error(`${name}: rejected`, error);
@@ -44,7 +44,7 @@ const module = runtime.module(define, name => {
                 console.log(`${name}: pending`);
             },
             fulfilled(val) {
-                console.log("Value of slsparam changed ", val);
+                // console.log("Value of slsparam changed ", val);
                 // var jobparam = JSON.parse(val)
                 window.jobparam = val;
                 var elm = document.getElementById("sampleview");

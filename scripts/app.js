@@ -1,4 +1,9 @@
 console.log("App jS loaded");
+{/* <script type="module"> */ }
+
+
+
+
 
 
 function loadspec(specname, obj, fname) {
@@ -56,7 +61,7 @@ function loadSLSConfigs() {
             // slsinfo[globalcounter].itu = d;
             // if (document.getElementById("ituspec").firstElementChild)
             //     document.getElementById("ituspec").firstElementChild.remove();
-            // itueditor = new JSONEditor(document.getElementById('ituspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, d);
+            // itueditor = new JSONEditor(document.getElementById('ituspec'), {mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, d);
             // console.log("itu editor", itueditor);
             //createJSONCard("itu",d);
         });
@@ -68,7 +73,7 @@ function loadSLSConfigs() {
             // // new Inspector(document.querySelector("#nr")).fulfilled(d);
             // if (document.getElementById("nrspec").firstElementChild)
             //     document.getElementById("nrspec").firstElementChild.remove();
-            // nreditor = new JSONEditor(document.getElementById('nrspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, d);
+            // nreditor = new JSONEditor(document.getElementById('nrspec'), {mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, d);
 
             //createJSONCard("nr",d);
         });
@@ -80,7 +85,7 @@ function loadSLSConfigs() {
             // slsinfo[globalcounter].sim = d;
             // if (document.getElementById("simspec").firstElementChild)
             //     document.getElementById("simspec").firstElementChild.remove();
-            // simeditor = new JSONEditor(document.getElementById('simspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, d);
+            // simeditor = new JSONEditor(document.getElementById('simspec'), {mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, d);
             //createJSONCard("sim",d);
         });
 }
