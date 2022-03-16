@@ -101,31 +101,19 @@ document.getElementById('inputfile')
 
 
 
-$(document).ready(function () {
+// (function () {
 
-    window.onload = function () {
+window.onload = function () {
 
-        console.log("window.location.href", window.location.href);
-        if (window.location.href.startsWith("http://localhost")) {
+    console.log("window.location.href", window.location.href);
+    if (window.location.href.startsWith("http://localhost")) {
 
-            selectBot("local");
-        } else {
-            selectBot("gae");
-        }
-        // if (document.getElementsByClassName('.ui.accordion').length > 0) {
-        //     $('.ui.accordion').accordion();
-        // }
-
-
-
-        //     $('.ui.sidebar')
-        //         .sidebar('attach events', '.toc.item')
-        //       ;
-
-    };
-});
-
-
+        selectBot("local");
+    } else {
+        selectBot("gae");
+    }
+};
+// });
 
 
 

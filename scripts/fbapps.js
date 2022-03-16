@@ -43,6 +43,9 @@ auth.onAuthStateChanged(user => {
 
 });
 document.getElementById("loadjobs").onclick = () => {
+    if (currentUser === undefined) {
+        return
+    }
     console.log("For user ", currentUser);
     getRecentJobs(currentUser.uid);
 
