@@ -441,239 +441,115 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--12-col">
-                    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-                        <div class="mdl-tabs__tab-bar">
-                            <a href="#m2101-panel" class="mdl-tabs__tab ">M.2101</a>
-                            <a href="#sls-panel" class="mdl-tabs__tab is-active">SLS Simulator</a>
-                            <a href="#dummy-panel" class="mdl-tabs__tab">More..</a>
-                        </div>
-
-                        <div class="mdl-tabs__panel " id="m2101-panel">
-                            <div class="mdl-card mdl-shadow--2dp">
-                                <div class="mdl-card__title">
-                                    <h3 class="mdl-card__title-text">M.2101 Configuration</h3>
-                                </div>
-                                <div class="mdl-card__supporting-text">
-                                    <input type="file" id="inputfile" name="inputfile" />
-                                    <!-- Accent-colored raised button with ripple -->
-                                    <label
-                                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary "
-                                        for="inputfile">
-                                        <i class="material-icons ">file_open</i>
-                                        Pick File
-                                    </label>
-                                    <span id="filename"> Filename </span>
-
-                                </div>
-                                <div class="mdl-card__actions mdl-card--border">
-                                    <!-- <label class="mdl-button--primary" for="inputfile">File Pick</label> -->
-                                    <!-- <input class="mdl-textfield__input" type="file" name="inputfile" id="inputfile"> -->
-                                    <div id="output"> </div>
-                                </div>
-                                <div class="mdl-card__menu">
-                                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
-                                        id="runm2101">
-                                        <i class="material-icons">queue_play_next</i>
-                                        <!-- <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                                            <i class="material-icons">run_circle</i>
-                                        </button> -->
-                                    </button>
-
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                        <div class="mdl-tabs__panel is-active" id="sls-panel">
-
-                            <div class="mdl-card mdl-shadow--2dp">
-                                <div class="mdl-card__title">
-                                    <h2 class="mdl-card__title-text">SLS</h2>
-                                </div>
-                                <div class="mdl-card__supporting-text">
-                                    Runs a system simulation, with wrap around and M.2412 based channel models
-                                </div>
-                                <div class="mdl-card__actions mdl-card--border">
-                                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                                        Load Defaults
-                                    </a>
-
-                                    <div class="mdl-grid">
-                                        <div class="mdl-cell--4-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone "
-                                            style="border-right:1px solid rgba(6, 45, 46, 0.445);">
-                                            <input type="file" id="itu-file">
-                                            <!-- Accent-colored raised button with ripple -->
-                                            <label
-                                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary "
-                                                for="itu-file">
-                                                <i class="material-icons ">file_open</i>
-                                                ITU (json)
-                                            </label>
-                                            <span>None</span>
-
-                                            <div class="row">
-
-                                                <div id="ituspec" style="height:400px">
-                                                </div>
-                                                <div id="itu"></div>
-                                            </div>
-                                        </div>
-                                        <div class="mdl-cell--4-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone "
-                                            style="border-right:1px solid rgba(6, 45, 46, 0.445);">
-                                            <input type="file" id="nr-file">
-                                            <label
-                                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary "
-                                                for="nr-file">
-                                                <i class="material-icons ">file_open</i>
-                                                NR (json)
-                                            </label>
-                                            <span>None</span>
-
-
-                                            <div class="row">
-
-                                                <div id="nrspec" style="height:400px;">
-                                                </div>
-                                                <div id="nr"></div>
-                                            </div>
-                                        </div>
-                                        <div class="mdl-cell--4-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone  "
-                                            style="border-right:1px solid rgba(6, 45, 46, 0.205);">
-                                            <input type="file" id="sim-file">
-                                            <label
-                                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary "
-                                                for="sim-file">
-                                                <i class="material-icons ">file_open</i>
-                                                SIM (json)
-                                            </label>
-                                            <span>None</span>
-                                            <div class="row">
-                                                <div id="simspec" style="height:400px;">
-                                                </div>
-                                                <div id="sim"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="mdl-card__menu">
-                                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
-                                        id="runsls">
-                                        <i class="material-icons">queue_play_next</i>
-                                        <!-- <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                                            <i class="material-icons">run_circle</i>
-                                        </button> -->
-                                    </button>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="mdl-tabs__panel" id="dummy-panel">
-
-                            <div class="mdl-card mdl-shadow--2dp">
-                                <div class="mdl-card__title">
-                                    <h2 class="mdl-card__title-text">Dummy More..</h2>
-                                </div>
-                                <div class="mdl-card__supporting-text">
-
-                                </div>
-                                <div class="mdl-card__actions mdl-card--border">
-                                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-
-                                    </a>
-                                </div>
-                                <div class="mdl-card__menu">
-                                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                                        <i class="material-icons">share</i>
-                                    </button>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet " id="plots">
+                <div class="mdl-cell mdl-cell--12-col ">
                     <div class="mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title">
-                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="vegaplot">
-                                SINR CDF <i class="material-icons">refresh</i>
-                            </a>
+                            <h3 class="mdl-card__title-text">App Name</h3>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <input type="file" id="inputfile" name="inputfile" />
+                            <!-- Accent-colored raised button with ripple -->
+                            <label
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary "
+                                for="inputfile">
+                                <i class="material-icons ">file_open</i> Pick File </label>
+                            <span id="filename"> Filename </span>
+
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
-
-                            <div id="vis"></div>
+                            <!-- <label class="mdl-button--primary" for="inputfile">File Pick</label> -->
+                            <!-- <input class="mdl-textfield__input" type="file" name="inputfile" id="inputfile"> -->
+                            <div id="output"> </div>
                         </div>
                         <div class="mdl-card__menu">
-                            <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" id="visshare">
-                                <i class="material-icons ">file_download</i>
-                            </a>
+                            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+                                id="runm2101">
+                                <i class="material-icons">queue_play_next</i>
+                                <!-- <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                                            <i class="material-icons">run_circle</i>
+                                        </button> -->
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--8-col-tablet " id="plots">
+                <div class="mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="vegaplot">
+                            SINR CDF <i class="material-icons">refresh</i>
+                        </a>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+
+                        <div id="vis"></div>
+                    </div>
+                    <div class="mdl-card__menu">
+                        <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" id="visshare">
+                            <i class="material-icons ">file_download</i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--8-col-tablet ">
+                <div class="mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title ">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                            id="refreshSamples">
+                            NW Layout
+                            <i class="material-icons">refresh</i>
+                        </a>
+                        <!-- <div class="mdl-layout-spacer"></div> -->
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="reloadSamples">
+                            Reload
+                        </a>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <div id="nwlayout"></div>
+                    </div>
+                    <div class="mdl-card__menu">
+                        <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                            <i class="material-icons ">file_download</i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CARD#4 PLOT   -->
+            <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet ">
+                <div class="mdl-card mdl-shadow--2dp mdl-card-full">
+                    <div class="mdl-card__title ">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="reload">
+                            UL CDF
+                            
+                            <i class="material-icons">event</i>
+                        </a>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+
+                        <div id="plot">
 
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet ">
-                    <div class="mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title ">
-                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                                id="refreshSamples">
-                                NW Layout
-                                <i class="material-icons">refresh</i>
-                            </a>
-                            <!-- <div class="mdl-layout-spacer"></div> -->
-                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                                id="reloadSamples">
-                                Reload
-                            </a>
-                        </div>
-                        <div class="mdl-card__actions mdl-card--border">
-                            <div id="nwlayout"></div>
-                        </div>
-                        <div class="mdl-card__menu">
-                            <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                                <i class="material-icons ">file_download</i>
-                            </a>
-                        </div>
 
-                    </div>
+
+            <div class="mdl-snackbar mdl-js-snackbar">
+
+                <div class="mdl-snackbar__text">
+                    aa
                 </div>
-
-                <!-- CARD#4 PLOT   -->
-                <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet ">
-                    <div class="mdl-card mdl-shadow--2dp mdl-card-full">
-                        <div class="mdl-card__title ">
-                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="reload">
-                                UL CDF
-                                <i class="material-icons">event</i>
-                            </a>
-                        </div>
-                        <div class="mdl-card__actions mdl-card--border">
-
-                            <div id="plot">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="mdl-snackbar mdl-js-snackbar">
-
-                    <div class="mdl-snackbar__text">
-                        aa
-                    </div>
-                    <!-- <h3></h3> -->
-                    <button type="button" class="mdl-snackbar__action"></button>
-                </div>
+                <!-- <h3></h3> -->
+                <button type="button" class="mdl-snackbar__action"></button>
+            </div>
         </main>
 
 
@@ -688,83 +564,83 @@
 
 
     <script>
-        var itueditor, simeditor, nreditor;
-        var subscription;
-        var globalcounter = 0;
+        // var itueditor, simeditor, nreditor;
+        // var subscription;
+        // var globalcounter = 0;
         var slsinfo = {};
-        const JFoptions = {
-            hoverPreviewEnabled: true,
-            hoverPreviewArrayCount: 10,
-            hoverPreviewFieldCount: 2,
-            // theme: 'dark',
-            animateOpen: false,
-            animateClose: false,
-            useToJSON: true
-        };
+        // const JFoptions = {
+        //     hoverPreviewEnabled: true,
+        //     hoverPreviewArrayCount: 10,
+        //     hoverPreviewFieldCount: 2,
+        //     // theme: 'dark',
+        //     animateOpen: false,
+        //     animateClose: false,
+        //     useToJSON: true
+        // };
 
 
-        document.getElementById('itu-file').addEventListener('change', event => {
-            var file = event.target.files[0];
-            // document.querySelector("div#tab1-panel > p").innerText = file.name;
-            // document.getElementById("filename").innerText = fname; // this.files[0].name;
-            // document.querySelector("#itu-file ~ span").innerText = file.name
+        // document.getElementById('itu-file').addEventListener('change', event => {
+        //     var file = event.target.files[0];
+        //     // document.querySelector("div#tab1-panel > p").innerText = file.name;
+        //     // document.getElementById("filename").innerText = fname; // this.files[0].name;
+        //     // document.querySelector("#itu-file ~ span").innerText = file.name
 
-            file.text().then(d => {
-                var obj = JSON.parse(d);
+        //     file.text().then(d => {
+        //         var obj = JSON.parse(d);
 
-                loadspec("itu", obj, file.name);
-                // if (slsinfo[globalcounter] == undefined) {
-                //     slsinfo[globalcounter] = { itu: {}, nr: {}, sim: {} };
-                // }
-                // slsinfo[globalcounter].itu = obj;
-                // if (document.getElementById("ituspec").firstElementChild)
-                //     document.getElementById("ituspec").firstElementChild.remove();
-                // itueditor = new JSONEditor(document.getElementById('ituspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, obj);
-
-
-            });
-        });
-        document.getElementById('nr-file').addEventListener('change', event => {
-            var file = event.target.files[0];
-            // document.querySelector("div#tab2-panel > p").innerText = file.name;
-            // document.querySelector("#nr-file ~ span").innerText = file.name
-
-            file.text().then(d => {
-                var obj = JSON.parse(d);
-                loadspec("nr", obj, file.name);
-                // new Inspector(document.querySelector("#nr")).fulfilled(obj);
+        //         loadspec("itu", obj, file.name);
+        //         // if (slsinfo[globalcounter] == undefined) {
+        //         //     slsinfo[globalcounter] = { itu: {}, nr: {}, sim: {} };
+        //         // }
+        //         // slsinfo[globalcounter].itu = obj;
+        //         // if (document.getElementById("ituspec").firstElementChild)
+        //         //     document.getElementById("ituspec").firstElementChild.remove();
+        //         // itueditor = new JSONEditor(document.getElementById('ituspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, obj);
 
 
-                // if (slsinfo[globalcounter] == undefined) {
-                //     slsinfo[globalcounter] = { itu: {}, nr: {}, sim: {} };
-                // }
-                // slsinfo[globalcounter].nr = obj;
+        //     });
+        // });
+        // document.getElementById('nr-file').addEventListener('change', event => {
+        //     var file = event.target.files[0];
+        //     // document.querySelector("div#tab2-panel > p").innerText = file.name;
+        //     // document.querySelector("#nr-file ~ span").innerText = file.name
 
-                // if (document.getElementById("nrspec").firstElementChild)
-                //     document.getElementById("nrspec").firstElementChild.remove();
-                // simeditor = new JSONEditor(document.getElementById('nrspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, obj);
+        //     file.text().then(d => {
+        //         var obj = JSON.parse(d);
+        //         loadspec("nr", obj, file.name);
+        //         // new Inspector(document.querySelector("#nr")).fulfilled(obj);
 
 
-            });
-        });
-        document.getElementById('sim-file').addEventListener('change', event => {
-            var file = event.target.files[0];
-            // document.querySelector("div#tab3-panel > p").innerText = file.name;
-            // document.querySelector("#sim-file ~ span").innerText = file.name
-            file.text().then(d => {
-                var obj = JSON.parse(d);
-                // new Inspector(document.querySelector("#sim")).fulfilled(obj);
-                loadspec("sim", obj, file.name);
-                // if (slsinfo[globalcounter] == undefined) {
-                //     slsinfo[globalcounter] = { itu: {}, nr: {}, sim: {} };
-                // }
-                // slsinfo[globalcounter].sim = obj;
-                // if (document.getElementById("simspec").firstElementChild)
-                //     document.getElementById("simspec").firstElementChild.remove();
-                // simeditor = new JSONEditor(document.getElementById('simspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, obj);
+        //         // if (slsinfo[globalcounter] == undefined) {
+        //         //     slsinfo[globalcounter] = { itu: {}, nr: {}, sim: {} };
+        //         // }
+        //         // slsinfo[globalcounter].nr = obj;
 
-            });
-        });
+        //         // if (document.getElementById("nrspec").firstElementChild)
+        //         //     document.getElementById("nrspec").firstElementChild.remove();
+        //         // simeditor = new JSONEditor(document.getElementById('nrspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, obj);
+
+
+        //     });
+        // });
+        // document.getElementById('sim-file').addEventListener('change', event => {
+        //     var file = event.target.files[0];
+        //     // document.querySelector("div#tab3-panel > p").innerText = file.name;
+        //     // document.querySelector("#sim-file ~ span").innerText = file.name
+        //     file.text().then(d => {
+        //         var obj = JSON.parse(d);
+        //         // new Inspector(document.querySelector("#sim")).fulfilled(obj);
+        //         loadspec("sim", obj, file.name);
+        //         // if (slsinfo[globalcounter] == undefined) {
+        //         //     slsinfo[globalcounter] = { itu: {}, nr: {}, sim: {} };
+        //         // }
+        //         // slsinfo[globalcounter].sim = obj;
+        //         // if (document.getElementById("simspec").firstElementChild)
+        //         //     document.getElementById("simspec").firstElementChild.remove();
+        //         // simeditor = new JSONEditor(document.getElementById('simspec'), { mode: 'code', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, obj);
+
+        //     });
+        // });
 
     </script>
     <!-- <script type="module">

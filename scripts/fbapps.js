@@ -82,12 +82,11 @@ function submitJob(jobname, jobparams) {
         watch(result.data, jobname);
     });
 }
-document.getElementById("runsls").onclick = () => {
-    var jobparams = { ...slsinfo[globalcounter] };
-    submitJob("sls", jobparams);
+// document.getElementById("runsls").onclick = () => {
+//     var jobparams = { ...slsinfo[globalcounter] };
+//     submitJob("sls", jobparams);
 
-
-};
+// };
 document.getElementById("runm2101").onclick = () => {
     var jobparams = { imt: editor.get() };
     submitJob("m2101", jobparams);
