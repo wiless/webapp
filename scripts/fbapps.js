@@ -91,30 +91,35 @@ document.getElementById("jobsubmit").onclick = () => {
     console.log("ITU  ..", window.jobparam.itu);
     console.log("NR  ..", window.jobparam.nr);
     console.log("SIM  ..", window.jobparam.sim);
-    submitJob("sls", window.jobparam);
-    // var msg = {
-    //     message: 'Message Sent',
-    //     actionHandler: function (event) { },
-    //     actionText: 'Undo',
-    //     timeout: 10000
-    // }
+    submitJob("sls", window.jobparam).then(
+        jobid => {
+            
+            document.getElementById("jobsid").dataset['badge']++;
 
-    notification.MaterialSnackbar.showSnackbar(
-        {
-            // actionHandler: function (event) { console.log("Cancelled") },
-            // actionText: 'Undo',
-            message: 'Job Submitted '
+            // var msg = {
+            //     message: 'Message Sent',
+            //     actionHandler: function (event) { },
+            //     actionText: 'Undo',
+            //     timeout: 10000
+            // }
+            notification.MaterialSnackbar.showSnackbar(
+                {
+                    // actionHandler: function (event) { console.log("Cancelled") },
+                    // actionText: 'Undo',
+                    message: 'Job Submitted ' + jobid
+                }
+            )
         }
     );
-    //  dialog.close();
 }
 
 
 function submitJob(jobname, jobparams) {
-    wiless.APIcalls("submitjob", jobparams, jobname).then(result => {
+    return wiless.APIcalls("submitjob", jobparams, jobname).then(result => {
         console.log("Job ", jobname, "Result", result);
         watch(result.data, jobname);
-    });
+        return result.data;
+    }).then(d => d);
 }
 // document.getElementById("runsls").onclick = () => {
 //     var jobparams = { ...slsinfo[globalcounter] };

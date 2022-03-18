@@ -70,7 +70,8 @@ function loadSLSConfigs() {
     // var itu = fetch(itufilename).then(d => d.json())
     // var nr = fetch(nrfilename).then(d => d.json())
     // var sim = fetch(simfilename).then(d => d.json());
-    var [itu, nr, sim] = Promise.all([fetch(itufilename), fetch(nrfilename), fetch(simfilename)])
+
+    console.log("GITHUB json ", result);
     return
 }
 document.getElementById("loaddefaults").onclick = () => {
@@ -79,9 +80,28 @@ document.getElementById("loaddefaults").onclick = () => {
     // document.getElementById("jobpage").classList.remove("hidden");
     // console.log("Showing Job page plotapps");
     // loadJob("jobpage", "sls");
-    var slsconfig = loadSLSConfigs();
-    module.redefine("fileobj", { itu: "sendil", nr: "kavish", sls: "sls" });
+    var itufilename = "https://raw.githubusercontent.com/5gif/ituset/main/DECT/ITU_UMa_mMTC_configA.json";
+    var nrfilename = "https://raw.githubusercontent.com/5gif/ituset/main/DECT/DECT_UMa_mMTC_configA.json";
+    var simfilename = "https://raw.githubusercontent.com/5gif/ituset/main/DECT/SIM_UMa_mMTC_configA.json";
+    // terms=x.split("/").splice(-1)[0]
+
+    // var itu = fetch(itufilename).then(d => d.json())
+    // var nr = fetch(nrfilename).then(d => d.json())
+    // var sim = fetch(simfilename).then(d => d.json());
+    Promise.all([d3.json(itufilename), d3.json(nrfilename), d3.json(simfilename)]).then(val => {
+        var githubsls = ({
+            itu: val[0], nr: val[1], sim:
+                val[2]
+        });
+        // console.log("default sls", githubsls);
+        module.redefine("fileobj", githubsls);
+    })
+
+
+
 }
+
+
 
 
 
