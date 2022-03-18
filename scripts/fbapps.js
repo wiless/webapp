@@ -50,32 +50,66 @@ document.getElementById("loadjobs").onclick = () => {
     getRecentJobs(currentUser.uid);
 
 }
-var dialog = document.querySelector('dialog');
-var showDialogButton = document.querySelector('#show-dialog');
-if (!dialog.showModal) {
-    dialogPolyfill.registerDialog(dialog);
-}
-showDialogButton.addEventListener('click', function () {
-    // dialog.show();
-    const el = document.querySelector(".mdl-layout")
-    el.MaterialLayout.toggleDrawer();
 
-    dialog.querySelector("h4").innerHTML = "Submit SLS Simulation"
-    // module.redefine("slsdefault", {name: "sendil", son: "kavish" });
 
-    dialog.showModal();
 
-});
-dialog.close();
-dialog.querySelector('.accept').addEventListener('click', function () {
+// var dialog = document.querySelector('dialog');
+// var showDialogButton = document.querySelector('#show-dialog');
+// if (!dialog.showModal) {
+//     dialogPolyfill.registerDialog(dialog);
+// }
+// showDialogButton.addEventListener('click', function () {
+//     // dialog.show();
+//     const el = document.querySelector(".mdl-layout")
+//     el.MaterialLayout.toggleDrawer();
+
+//     dialog.querySelector("h4").innerHTML = "Submit SLS Simulation"
+//     // module.redefine("slsdefault", {name: "sendil", son: "kavish" });
+//     dialog.showModal();
+
+// });
+// dialog.close();
+// dialog.querySelector('.accept').addEventListener('click', function () {
+//     console.log("Accepting ..", window.jobparam);
+//     submitJob("sls", window.jobparam);
+//     dialog.close();
+// });
+
+// dialog.querySelector('.close').addEventListener('click', function () {
+//     dialog.close();
+// });
+
+var notification = document.querySelector('.mdl-js-snackbar');
+
+
+document.getElementById("jobsubmit").onclick = () => {
+    if (window.jobparam == undefined) {
+        alert("Empty Configuration");
+        return;
+    }
     console.log("Accepting ..", window.jobparam);
+    console.log("ITU  ..", window.jobparam.itu);
+    console.log("NR  ..", window.jobparam.nr);
+    console.log("SIM  ..", window.jobparam.sim);
     submitJob("sls", window.jobparam);
-    dialog.close();
-});
+    // var msg = {
+    //     message: 'Message Sent',
+    //     actionHandler: function (event) { },
+    //     actionText: 'Undo',
+    //     timeout: 10000
+    // }
 
-dialog.querySelector('.close').addEventListener('click', function () {
-    dialog.close();
-});
+    notification.MaterialSnackbar.showSnackbar(
+        {
+            // actionHandler: function (event) { console.log("Cancelled") },
+            // actionText: 'Undo',
+            message: 'Job Submitted '
+        }
+    );
+    //  dialog.close();
+}
+
+
 function submitJob(jobname, jobparams) {
     wiless.APIcalls("submitjob", jobparams, jobname).then(result => {
         console.log("Job ", jobname, "Result", result);
@@ -87,10 +121,12 @@ function submitJob(jobname, jobparams) {
 //     submitJob("sls", jobparams);
 
 // };
-document.getElementById("runm2101").onclick = () => {
-    var jobparams = { imt: editor.get() };
-    submitJob("m2101", jobparams);
-};
+// document.getElementById("runm2101").onclick = () => {
+//     var jobparams = { imt: editor.get() };
+//     submitJob("m2101", jobparams);
+// };
+
+
 function watch(jobid, appname) {
     console.log("Current user ", currentUser);
     var jobpath = "users/" + currentUser.uid + "/status/" + jobid;

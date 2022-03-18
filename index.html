@@ -49,8 +49,9 @@
     <meta name="google-signin-scope" content="profile email">
 
 
-    <!-- <link href="/static/jsoneditor.css" rel="stylesheet" type="text/css">
-    <script src="/static/jsoneditor.js"></script> -->
+
+
+    <!-- <script src="/static/jsoneditor.js"></script> -->
     <!-- <script async defer src="/static/json-formatter.umd.js" charset="UTF-8"></script> -->
     <style>
         .json-formatter-row .json-formatter-string,
@@ -227,29 +228,13 @@
                 <a class="mdl-navigation__link " href="#jobs" disabled> <i class="material-icons"> work_history </i>
                     Jobs History </a>
 
-                <label class="mdl-navigation__link mdl-button--primary" href="" id="show-dialog">Submit Job</label>
-                <!-- <button id="show-dialog" type="button" class="mdl-button">Submit Job</button> -->
+                <label class="mdl-navigation__link mdl-button--primary" id="submitslsjob">Submit
+                    SLS</label>
+
             </nav>
         </div>
         <dialog class="mdl-dialog" id="dlgjob" style="width: 70%;max-height: 50%;">
-            <h4 class="mdl-dialog__title">Submit Job?</h4>
-            <div class="mdl-dialog__content ">
-                <div id="informaton">
-                    This is sample information about the app and the required configuration
-                </div>
-                <div id="jobconfiguration" style="display: block;">
-                </div>
-                <div id="sampleview">
-                </div>
 
-
-                <p> Credit: <a href="https://observablehq.com/@wiless/configuration-editors">Configuration Editors by
-                        ssk</a></p>
-            </div>
-            <div class=" mdl-dialog__actions ">
-                <button type="button" class="mdl-button accept">Submit</button>
-                <button type="button" class="mdl-button close">Cancel</button>
-            </div>
         </dialog>
 
         <div class="mdl-card mdl-shadow--2dp form-popup" id="myForm" style="background-color: antiquewhite;">
@@ -344,8 +329,6 @@
             </div> -->
 
             <div class="mdl-grid container mdl-layout-spacer">
-                <!-- CARDS  -->
-                <!-- CARD#1 Logged In User Info can be moved to left later  -->
 
 
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-phone mdl-cell--12-col-tablet  ">
@@ -435,113 +418,130 @@
 
                             <div id="filelist"></div>
                         </div>
-
-
-
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--12-col ">
-                    <div class="mdl-card mdl-shadow--2dp">
+                <div class="mdl-cell mdl-cell--12-col hidden" id="jobpage">
+                    <div class="mdl-card mdl-shadow--3dp mdl-card--expand">
                         <div class="mdl-card__title">
-                            <h3 class="mdl-card__title-text">App Name</h3>
+                            <h4> Submit Job</h4>
                         </div>
-                        <div class="mdl-card__supporting-text">
-                            <input type="file" id="inputfile" name="inputfile" />
-                            <!-- Accent-colored raised button with ripple -->
-                            <label
-                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary "
-                                for="inputfile">
-                                <i class="material-icons ">file_open</i> Pick File </label>
-                            <span id="filename"> Filename </span>
+                        <div class="mdl-card__actions ">
 
-                        </div>
-                        <div class="mdl-card__actions mdl-card--border">
-                            <!-- <label class="mdl-button--primary" for="inputfile">File Pick</label> -->
-                            <!-- <input class="mdl-textfield__input" type="file" name="inputfile" id="inputfile"> -->
-                            <div id="output"> </div>
+                            <div id="jobinformation" style="display:block;">
+                            </div>
+                            <div id="jobconfiguration" style="display:block;margin-top: 0px;">
+                            </div>
+                            <div id="sampleview">
+                            </div>
+                            <p> Credit: <a href="https://observablehq.com/@wiless/configuration-editors">Configuration
+                                    Editors by ssk</a></p>
                         </div>
                         <div class="mdl-card__menu">
-                            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
-                                id="runm2101">
-                                <i class="material-icons">queue_play_next</i>
-                                <!-- <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                                            <i class="material-icons">run_circle</i>
-                                        </button> -->
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                                id="loaddefaults">
+                                Load Defaults
+                            </a>
+                            <!-- <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                                id="xjobsubmit">Submit</button>
+                            <button -->
+                            class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect mdl-button--accent"
+                            id="jobsubmit">
+                            <i class="material-icons">queue_play_next</i>
                             </button>
 
+
+                            <button class="mdl-button mdl-js-button mdl-button--icon" id="closejob">
+                                <i class="material-icons">close</i>
+                            </button>
+                            <script>
+                                document.getElementById("closejob").onclick =
+                                    () => {
+                                        document.getElementById("jobpage").classList.add("hidden");
+                                    };
+
+                            </script>
+
+
+                            <!-- <button type="button" class="mdl-button close">Cancel</button> -->
                         </div>
                     </div>
-
                 </div>
-            </div>
 
-            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--8-col-tablet " id="plots">
-                <div class="mdl-card mdl-shadow--2dp">
-                    <div class="mdl-card__title">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="vegaplot">
-                            SINR CDF <i class="material-icons">refresh</i>
-                        </a>
-                    </div>
-                    <div class="mdl-card__actions mdl-card--border">
 
-                        <div id="vis"></div>
-                    </div>
-                    <div class="mdl-card__menu">
-                        <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" id="visshare">
-                            <i class="material-icons ">file_download</i>
-                        </a>
 
-                    </div>
-                </div>
-            </div>
 
-            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--8-col-tablet ">
-                <div class="mdl-card mdl-shadow--2dp">
-                    <div class="mdl-card__title ">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                            id="refreshSamples">
-                            NW Layout
-                            <i class="material-icons">refresh</i>
-                        </a>
-                        <!-- <div class="mdl-layout-spacer"></div> -->
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="reloadSamples">
-                            Reload
-                        </a>
-                    </div>
-                    <div class="mdl-card__actions mdl-card--border">
-                        <div id="nwlayout"></div>
-                    </div>
-                    <div class="mdl-card__menu">
-                        <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                            <i class="material-icons ">file_download</i>
-                        </a>
-                    </div>
 
-                </div>
-            </div>
+                <!-- <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-phone mdl-cell--12-col-tablet  "> -->
 
-            <!-- CARD#4 PLOT   -->
-            <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet ">
-                <div class="mdl-card mdl-shadow--2dp mdl-card-full">
-                    <div class="mdl-card__title ">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="reload">
-                            UL CDF
-                            
-                            <i class="material-icons">event</i>
-                        </a>
-                    </div>
-                    <div class="mdl-card__actions mdl-card--border">
+                <!-- <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-phone mdl-cell--12-col-tablet "> -->
+                <div class="mdl-cell mdl-cell--3-col  mdl-cell--12-col-phone mdl-cell--12-col-tablet " id=" plots">
+                    <div class="mdl-card mdl-shadow--2dp  mdl-card-full">
+                        <div class="mdl-card__title">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="vegaplot">
+                                SINR CDF <i class="material-icons">refresh</i>
+                            </a>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
 
-                        <div id="plot">
+                            <div id="vis"></div>
+                        </div>
+                        <div class="mdl-card__menu">
+                            <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" id="visshare">
+                                <i class="material-icons ">file_download</i>
+                            </a>
 
                         </div>
                     </div>
                 </div>
+
+                <div class="mdl-cell mdl-cell--3-col  mdl-cell--12-col-phone mdl-cell--12-col-tablet ">
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title ">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                                id="refreshSamples">
+                                NW Layout
+                                <i class="material-icons">refresh</i>
+                            </a>
+                            <!-- <div class="mdl-layout-spacer"></div> -->
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                                id="reloadSamples">
+                                Reload
+                            </a>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <div id="nwlayout"></div>
+                        </div>
+                        <div class="mdl-card__menu">
+                            <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                <i class="material-icons ">file_download</i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- CARD#4 PLOT   -->
+                <div class="mdl-cell mdl-cell--3-col  mdl-cell--12-col-phone mdl-cell--12-col-tablet ">
+                    <div class="mdl-card mdl-shadow--2dp ">
+                        <div class="mdl-card__title ">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="reload">
+                                UL CDF
+
+                                <i class="material-icons">event</i>
+                            </a>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+
+                            <div id="plot">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-
-
-
             <div class="mdl-snackbar mdl-js-snackbar">
 
                 <div class="mdl-snackbar__text">
@@ -553,21 +553,23 @@
         </main>
 
 
-    </div>
-    <!-- ---  OBSERVABLE  -->
+
+        <!-- ---  OBSERVABLE  -->
 
 
 
-    <script src="/scripts/wiless.js" async></script>
-    <script src="/scripts/webapp.js" async></script>
+        <script src="/scripts/wiless.js" async></script>
+        <script src="/scripts/webapp.js" async></script>
 
 
 
-    <script>
-        // var itueditor, simeditor, nreditor;
-        // var subscription;
-        // var globalcounter = 0;
-        var slsinfo = {};
+        <script>
+
+
+            // var itueditor, simeditor, nreditor;
+            // var subscription;
+            // var globalcounter = 0;
+            var slsinfo = {};
         // const JFoptions = {
         //     hoverPreviewEnabled: true,
         //     hoverPreviewArrayCount: 10,
@@ -642,8 +644,8 @@
         //     });
         // });
 
-    </script>
-    <!-- <script type="module">
+        </script>
+        <!-- <script type="module">
         // var data = [1, 5, 52, 123];
         // const domContainer = document.querySelector('#like_button_container');
         import { Inspector } from "https://unpkg.com/@observablehq/inspector?module";
@@ -653,16 +655,19 @@
     </script> -->
 
 
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@3/dist/inspector.css">
+        <link rel="stylesheet" type="text/css"
+            href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@3/dist/inspector.css" defer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@observablehq/inspector@3/dist/inspector.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/@observablehq/inspector@3/dist/inspector.js" defer></script>
 
-    <script src="/scripts/fbapps.js" type="module" async onload="console.log('loading fbapps.js done')"></script>
-    <script src="/scripts/plot.js" type="defer" async loading="lazy"
-        onload="console.log('loading plot.js done')"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.4" defer></script>
+        <script src="/scripts/fbapps.js" type="module" async onload="console.log('loading fbapps.js done')"></script>
+        <script src="/scripts/plot.js" type="module" async loading="lazy"
+            onload="console.log('loading plot.js done')"></script>
+        <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.4" defer></script>
+        <link href=" https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.7.3/jsoneditor.css" rel="stylesheet"
+            type="text/css">
+        <!-- <link href="/static/jsoneditor.css" rel="stylesheet" type="text/css" defer> -->
 </body>
 
 </html>

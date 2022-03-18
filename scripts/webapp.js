@@ -67,41 +67,41 @@ function closeForm() {
     document.getElementById("myForm").style.display = "none";
 }
 
-document.getElementById('inputfile')
-    .addEventListener('change', function (e) {
+// document.getElementById('inputfile')
+//     .addEventListener('change', function (e) {
 
-        var fr = new FileReader();
-        var fname = this.files[0].name;
-        document.getElementById("filename").innerText = fname; // this.files[0].name;
-
-
-        fr.onload = function () {
-            el = document.getElementById('output');
-            // el.removeChild(el.lastChild);
-            // el.textContent=fr.result; 
-
-            try {
-                json = JSON.parse(fr.result);
-                if (!el.firstElementChild) {
-                    editor = new JSONEditor(el, { mode: 'view', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, json);
-                } else {
-                    editor.set(jsob)
-
-                }
-            } catch (e) {
-                document.getElementById("filename").innerText = fname + " Not JSON parsable";
-            }
+//         var fr = new FileReader();
+//         var fname = this.files[0].name;
+//         document.getElementById("filename").innerText = fname; // this.files[0].name;
 
 
-            // const editor = new JSONEditor(el, {mode: 'view', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, json);
+//         fr.onload = function () {
+//             el = document.getElementById('output');
+//             // el.removeChild(el.lastChild);
+//             // el.textContent=fr.result; 
 
-        }
-        fr.readAsText(this.files[0]);
-    });
+//             try {
+//                 json = JSON.parse(fr.result);
+//                 if (!el.firstElementChild) {
+//                     editor = new JSONEditor(el, { mode: 'view', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, json);
+//                 } else {
+//                     editor.set(jsob)
+
+//                 }
+//             } catch (e) {
+//                 document.getElementById("filename").innerText = fname + " Not JSON parsable";
+//             }
+
+
+//             // const editor = new JSONEditor(el, {mode: 'view', modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], maxVisibleChilds: 25 }, json);
+
+//         }
+//         fr.readAsText(this.files[0]);
+//     });
 
 
 
-// (function () {
+
 
 window.onload = function () {
 
